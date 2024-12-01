@@ -1,7 +1,7 @@
 for _, v in pairs(game.CoreGui:GetChildren()) do
-    if v.Name == "UiLib" then
-        v:Destroy()
-    end
+	if v.Name == "UiLib" then
+		v:Destroy()
+	end
 end
 
 local UiLib = Instance.new("ScreenGui")
@@ -10,161 +10,157 @@ UiLib.Parent = game.CoreGui
 UiLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local function getNextWindowPos()
-    local biggest = 0
-    local lastWindow
-    for _, window in pairs(UiLib:GetChildren()) do
-        if window.Position.X.Offset > biggest then
-            biggest = window.Position.X.Offset
-            lastWindow = window
-        end
-    end
-    return (biggest == 0) and 15 or (biggest + lastWindow.Size.X.Offset + 10)
+	local biggest = 0
+	local lastWindow
+	for _, window in pairs(UiLib:GetChildren()) do
+		if window.Position.X.Offset > biggest then
+			biggest = window.Position.X.Offset
+			lastWindow = window
+		end
+	end
+	return (biggest == 0) and 15 or (biggest + lastWindow.Size.X.Offset + 10)
 end
 
 local Library = {}
 
 function Library:Window(title)
-    local Top = Instance.new("Frame")
-    local Container = Instance.new("Frame")
-    local UIListLayout_2 = Instance.new("UIListLayout")
-    local Line = Instance.new("Frame")
-    local Title = Instance.new("TextLabel")
-    local Minimize = Instance.new("ImageButton")
+	local Top = Instance.new("Frame")
+	local Container = Instance.new("Frame")
+	local UIListLayout_2 = Instance.new("UIListLayout")
+	local Line = Instance.new("Frame")
+	local Title = Instance.new("TextLabel")
+	local Minimize = Instance.new("ImageButton")
 
-    Top.Name = "Top"
-    Top.Parent = UiLib
-    Top.BackgroundColor3 = Color3.fromRGB(45, 45, 45)  -- Dark gray for background
-    Top.BorderSizePixel = 0
-    Top.Position = UDim2.new(0, getNextWindowPos(), 0.01, 0)
-    Top.Size = UDim2.new(0, 204, 0, 28)
-    Top.Active = true
-    Top.Draggable = true
+	Top.Name = "Top"
+	Top.Parent = UiLib
+	Top.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	Top.BorderSizePixel = 0
+	Top.Position = UDim2.new(0, getNextWindowPos(), 0.01, 0)
+	Top.Size = UDim2.new(0, 204, 0, 28)
+	Top.Active = true
+	Top.Draggable = true
 
-    Instance.new("UICorner", Top).CornerRadius = UDim.new(0, 6)  -- Slightly rounded corners for a softer look
+	Instance.new("UICorner", Top).CornerRadius = UDim.new(0, 4)
 
-    Container.Name = "Container"
-    Container.Parent = Top
-    Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Container.BackgroundTransparency = 1
-    Container.ClipsDescendants = true
-    Container.Position = UDim2.new(0, 0, 1, 0)
-    Container.Size = UDim2.new(0, 204, 0, 762)
+	Container.Name = "Container"
+	Container.Parent = Top
+	Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Container.BackgroundTransparency = 1
+	Container.ClipsDescendants = true
+	Container.Position = UDim2.new(0, 0, 1, 0)
+	Container.Size = UDim2.new(0, 204, 0, 762)
 
-    UIListLayout_2.Parent = Container
-    UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_2.Parent = Container
+	UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 
-    Line.Name = "Line"
-    Line.Parent = Top
-    Line.BackgroundColor3 = Color3.fromRGB(65, 65, 65)  -- Lighter gray for the line
-    Line.BorderSizePixel = 0
-    Line.Position = UDim2.new(0, 0, 0.892857134, 0)
-    Line.Size = UDim2.new(0, 204, 0, 3)
+	Line.Name = "Line"
+	Line.Parent = Top
+	Line.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	Line.BorderSizePixel = 0
+	Line.Position = UDim2.new(0, 0, 0.892857134, 0)
+	Line.Size = UDim2.new(0, 204, 0, 3)
 
-    Title.Name = "Title"
-    Title.Parent = Top
-    Title.BackgroundTransparency = 1
-    Title.Position = UDim2.new(0.0245098043, 0, 0.142857149, 0)
-    Title.Size = UDim2.new(0, 174, 0, 20)
-    Title.Font = Enum.Font.GothamSemibold
-    Title.Text = title
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)  -- White text for clarity
-    Title.TextScaled = true
-    Title.TextSize = 14
-    Title.TextWrapped = true
-    Title.TextXAlignment = Enum.TextXAlignment.Left
+	Title.Name = "Title"
+	Title.Parent = Top
+	Title.BackgroundTransparency = 1
+	Title.Position = UDim2.new(0.0245098043, 0, 0.142857149, 0)
+	Title.Size = UDim2.new(0, 174, 0, 20)
+	Title.Font = Enum.Font.GothamSemibold
+	Title.Text = title
+	Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title.TextScaled = true
+	Title.TextSize = 14
+	Title.TextWrapped = true
+	Title.TextXAlignment = Enum.TextXAlignment.Left
 
-    Minimize.Name = "Minimize"
-    Minimize.Parent = Top
-    Minimize.BackgroundTransparency = 1
-    Minimize.Position = UDim2.new(0.877451003, 0, 0, 0)
-    Minimize.Rotation = 90
-    Minimize.Size = UDim2.new(0, 25, 0, 25)
-    Minimize.ZIndex = 2
-    Minimize.Image = "rbxassetid://3926307971"
-    Minimize.ImageColor3 = Color3.fromRGB(0, 255, 102)  -- Green color for minimize button
-    Minimize.ImageRectOffset = Vector2.new(764, 244)
-    Minimize.ImageRectSize = Vector2.new(36, 36)
+	Minimize.Name = "Minimize"
+	Minimize.Parent = Top
+	Minimize.BackgroundTransparency = 1
+	Minimize.Position = UDim2.new(0.877451003, 0, 0, 0)
+	Minimize.Rotation = 90
+	Minimize.Size = UDim2.new(0, 25, 0, 25)
+	Minimize.ZIndex = 2
+	Minimize.Image = "rbxassetid://3926307971"
+	Minimize.ImageColor3 = Color3.fromRGB(0, 255, 102)
+	Minimize.ImageRectOffset = Vector2.new(764, 244)
+	Minimize.ImageRectSize = Vector2.new(36, 36)
 
-    Minimize.MouseButton1Click:Connect(function()
-        local container = Minimize.Parent.Container
-        if container.Size == UDim2.new(0, 204, 0, 762) then
-            game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {Rotation = 180}):Play()
-            game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(255, 0, 68)}):Play()  -- Red when minimized
-            container:TweenSize(UDim2.new(0, 204, 0, 0), "InOut", "Sine", 0.25, true)
-            wait(0.25)
-            Minimize.Parent.Line.Visible = false
-        else
-            game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {Rotation = 90}):Play()
-            game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(0, 255, 102)}):Play()  -- Green when expanded
-            container:TweenSize(UDim2.new(0, 204, 0, 762), "InOut", "Sine", 0.2, true)
-            Minimize.Parent.Line.Visible = true
-        end
-    end)
+	Minimize.MouseButton1Click:Connect(function()
+		local container = Minimize.Parent.Container
+		if container.Size == UDim2.new(0, 204, 0, 762) then
+			game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {Rotation = 180}):Play()
+			game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(255, 0, 68)}):Play()
+			container:TweenSize(UDim2.new(0, 204, 0, 0), "InOut", "Sine", 0.25, true)
+			wait(0.25)
+			Minimize.Parent.Line.Visible = false
+		else
+			game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {Rotation = 90}):Play()
+			game:GetService("TweenService"):Create(Minimize, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(0, 255, 102)}):Play()
+			container:TweenSize(UDim2.new(0, 204, 0, 762), "InOut", "Sine", 0.2, true)
+			Minimize.Parent.Line.Visible = true
+		end
+	end)
 
-    local Lib = {}
+	local Lib = {}
 
-    -- Helper function to simplify button creation
-    local function createButton(name, callback)
-        local ButtonContainer = Instance.new("Frame")
-        local Button = Instance.new("TextButton")
-        local ButtonAni = Instance.new("Frame")
-        local UICorner_2 = Instance.new("UICorner")
+	-- Helper function to simplify button creation
+	local function createButton(name, callback)
+		local ButtonContainer = Instance.new("Frame")
+		local Button = Instance.new("TextButton")
+		local ButtonAni = Instance.new("Frame")
+		local UICorner_2 = Instance.new("UICorner")
 
-        ButtonContainer.Name = "ButtonContainer"
-        ButtonContainer.Parent = Container
-        ButtonContainer.BackgroundColor3 = Color3.fromRGB(55, 55, 55)  -- Darker button background
-        ButtonContainer.BorderSizePixel = 0
-        ButtonContainer.Size = UDim2.new(0, 204, 0, 28)
+		ButtonContainer.Name = "ButtonContainer"
+		ButtonContainer.Parent = Container
+		ButtonContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		ButtonContainer.BorderSizePixel = 0
+		ButtonContainer.Size = UDim2.new(0, 204, 0, 28)
 
-        Button.Name = "Button"
-        Button.Parent = ButtonContainer
-        Button.BackgroundTransparency = 1
-        Button.Size = UDim2.new(0, 204, 0, 28)
-        Button.Font = Enum.Font.SourceSans
-        Button.Text = ""
-        Button.TextColor3 = Color3.fromRGB(0, 0, 0)
-        Button.TextSize = 14
-        Button.MouseButton1Click:Connect(callback)
+		Button.Name = "Button"
+		Button.Parent = ButtonContainer
+		Button.BackgroundTransparency = 1
+		Button.Size = UDim2.new(0, 204, 0, 28)
+		Button.Font = Enum.Font.SourceSans
+		Button.Text = ""
+		Button.TextColor3 = Color3.fromRGB(0, 0, 0)
+		Button.TextSize = 14
+		Button.MouseButton1Click:Connect(callback)
 
-        ButtonAni.Name = "ButtonAni"
-        ButtonAni.Parent = Button
-        ButtonAni.BackgroundColor3 = Color3.fromRGB(0, 180, 255)  -- Light blue for button hover effect
-        ButtonAni.Position = UDim2.new(0.0245098043, 0, 0.0714285746, 0)
+		ButtonAni.Name = "ButtonAni"
+		ButtonAni.Parent = Button
+		ButtonAni.BackgroundColor3 = Color3.fromRGB(0, 255, 102)
+		ButtonAni.Position = UDim2.new(0.0245098043, 0, 0.0714285746, 0)
 
-        UICorner_2.CornerRadius = UDim.new(0, 6)  -- Slightly rounded corners
-        UICorner_2.Parent = ButtonAni
+		UICorner_2.CornerRadius = UDim.new(0, 4)
+		UICorner_2.Parent = ButtonAni
 
-        local ButtonName = Instance.new("TextLabel")
-        ButtonName.Name = "ButtonName"
-        ButtonName.Parent = ButtonContainer
-        ButtonName.BackgroundTransparency = 1
-        ButtonName.Position = UDim2.new(0.0245098043, 0, 0.142857149, 0)
-        ButtonName.Size = UDim2.new(0, 194, 0, 20)
-        ButtonName.ZIndex = 3
-        ButtonName.Font = Enum.Font.GothamSemibold
-        ButtonName.Text = name
-        ButtonName.TextColor3 = Color3.fromRGB(255, 255, 255)  -- White text for better readability
-        ButtonName.TextScaled = true
-        ButtonName.TextSize = 14
-        ButtonName.TextWrapped = true
+		local ButtonName = Instance.new("TextLabel")
+		ButtonName.Name = "ButtonName"
+		ButtonName.Parent = ButtonContainer
+		ButtonName.BackgroundTransparency = 1
+		ButtonName.Position = UDim2.new(0.0245098043, 0, 0.142857149, 0)
+		ButtonName.Size = UDim2.new(0, 194, 0, 20)
+		ButtonName.ZIndex = 3
+		ButtonName.Font = Enum.Font.GothamSemibold
+		ButtonName.Text = name
+		ButtonName.TextColor3 = Color3.fromRGB(255, 255, 255)
+		ButtonName.TextScaled = true
+		ButtonName.TextSize = 14
+		ButtonName.TextWrapped = true
 
-        ButtonAni.MouseButton1Click:Connect(function()
-            ButtonAni:TweenSize(UDim2.new(0, 194, 0, 24), "InOut", "Sine", 0.3, true)
-            wait(0.45)
-            ButtonAni:TweenSize(UDim2.new(0, 0, 0, 0), "InOut", "Sine", 0.3, true)
-        end)
-    end
+		ButtonAni.MouseButton1Click:Connect(function()
+			ButtonAni:TweenSize(UDim2.new(0, 194, 0, 24), "InOut", "Sine", 0.3, true)
+			wait(0.45)
+			ButtonAni:TweenSize(UDim2.new(0, 0, 0, 0), "InOut", "Sine", 0.3, true)
+end
+	Lib.Button = createButton
 
-    -- Button and toggle creation
-    Lib.Button = createButton
-
-    function Lib:Toggle(name, callback)
-        -- Implement Toggle here similar to Button, streamlined for performance.
-        -- Skipping for brevity, since it's quite similar to Button creation.
-    end
-    
-    return Lib
+	function Lib:Toggle(name, callback)
+	
+	end
+	
+	return Lib
 end
 
 return Library
