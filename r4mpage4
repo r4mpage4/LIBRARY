@@ -255,29 +255,31 @@ function Library:Window(title)
 		On.ImageColor3 = Color3.fromRGB(0, 255, 102)
 		On.ImageRectOffset = Vector2.new(312, 4)
 		On.ImageRectSize = Vector2.new(24, 24)
+		
 		local function XLZZDX_fake_script() 
-    local script = Instance.new('Script', Toggle)
-    
-    script.Parent.MouseButton1Click:Connect(function()
-        local tweenService = game:GetService("TweenService")
-        local off = script.Parent.Off
-        local on = script.Parent.On
-
-        if off.Rotation == 0 then
-            off.Visible = true
-            on.Visible = false
-            tweenService:Create(off, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 360, Size = UDim2.new(0.5, 0, 0.5, 0)}):Play()
-            tweenService:Create(on, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 0, Size = UDim2.new(0.5, 0, 0.5, 0)}):Play()
-        else
-            off.Visible = false
-            on.Visible = true
-            tweenService:Create(off, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 0, Size = UDim2.new(0.5, 0, 0.5, 0)}):Play()
-            tweenService:Create(on, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = -360, Size = UDim2.new(0.5, 0, 0.5, 0)}):Play()
-        end
-    end)
+			local script = Instance.new('Script', Toggle)
+			
+			script.Parent.MouseButton1Click:Connect(function()
+				if script.Parent.Off.Rotation == 0 then
+					script.Parent.On.Rotation = 0
+					game:GetService("TweenService"):Create(script.Parent.Off, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 360}):Play();
+					wait(0.3)
+					script.Parent.Off.Visible = false
+					script.Parent.On.Visible = true
+				else
+					script.Parent.Off.Rotation = 0
+					game:GetService("TweenService"):Create(script.Parent.On, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = -360}):Play();
+					wait(0.3)
+					script.Parent.On.Visible = false
+					script.Parent.Off.Visible = true
+				end
+			end)
+		end
+		coroutine.wrap(XLZZDX_fake_script)()
+	end
+	
+	return Lib
+	
 end
 
-coroutine.wrap(XLZZDX_fake_script)()
-
 return Library
-		
