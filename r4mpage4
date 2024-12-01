@@ -52,7 +52,7 @@ function Library:Window(title)
 
 	Container.Name = "Container"
 	Container.Parent = Top
-	Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Container.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 	Container.BackgroundTransparency = 1.000
 	Container.ClipsDescendants = true
 	Container.Position = UDim2.new(0, 0, 1, 0)
