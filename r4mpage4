@@ -40,7 +40,7 @@ function Library:Window(title)
 
 	Top.Name = "Top"
 	Top.Parent = UiLib
-	Top.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	Top.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 	Top.BorderSizePixel = 0
 	Top.Position = UDim2.new(0, getNextWindowPos(), 0.01, 0)
 	Top.Size = UDim2.new(0, 204, 0, 28)
