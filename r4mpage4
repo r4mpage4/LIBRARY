@@ -64,14 +64,14 @@ function Library:Window(title)
 
 	Line.Name = "Line"
 	Line.Parent = Top
-	Line.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	Line.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 	Line.BorderSizePixel = 0
 	Line.Position = UDim2.new(0, 0, 0.892857134, 0)
 	Line.Size = UDim2.new(0, 204, 0, 3)
 
 	Title.Name = "Title"
 	Title.Parent = Top
-	Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 	Title.BackgroundTransparency = 1.000
 	Title.Position = UDim2.new(0.0245098043, 0, 0.142857149, 0)
 	Title.Size = UDim2.new(0, 174, 0, 20)
@@ -91,23 +91,23 @@ function Library:Window(title)
 	Minimize.Size = UDim2.new(0, 25, 0, 25)
 	Minimize.ZIndex = 2
 	Minimize.Image = "rbxassetid://3926307971"
-	Minimize.ImageColor3 = Color3.fromRGB(0, 255, 102)
+	Minimize.ImageColor3 = Color3.fromRGB(0, 0, 255)
 	Minimize.ImageRectOffset = Vector2.new(764, 244)
 	Minimize.ImageRectSize = Vector2.new(36, 36)
 
-	local function UZVNGAL_fake_script() -- Minimize.Script 
+	local function UZVNGAL_fake_script()
 		local script = Instance.new('Script', Minimize)
 
 		script.Parent.MouseButton1Click:Connect(function()
 			if script.Parent.Parent.Container.Size == UDim2.new(0, 204,0, 762) then 
 				game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 180}):Play();
-				game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(255, 0, 68)}):Play()
+				game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(0, 0, 255)}):Play()
 				script.Parent.Parent.Container:TweenSize(UDim2.new(0, 204,0, 0), "InOut", "Sine", 0.25, true)
 				wait(0.25)
 				script.Parent.Parent.Line.Visible = false
 			else
 				game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 90}):Play();
-				game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(0, 255, 102)}):Play()
+				game:GetService("TweenService"):Create(script.Parent, TweenInfo.new(0.25), {ImageColor3 = Color3.fromRGB(0, 0, 255)}):Play()
 				script.Parent.Parent.Container:TweenSize(UDim2.new(0, 204,0, 762), "InOut", "Sine", 0.2, true)
 				script.Parent.Parent.Line.Visible = true
 			end
