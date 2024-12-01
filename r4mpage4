@@ -170,4 +170,4 @@ function Library:Window(title)
         Toggle.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
         Toggle.Position = UDim2.new(0.8529, 0, 0.0667, 0)
         Toggle.Size = UDim2.new(0, 25, 0, 23)
-return library
+return Library
