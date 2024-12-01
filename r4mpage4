@@ -129,7 +129,7 @@ function Library:Window(title)
 
         ButtonAni.Name = "ButtonAni"
         ButtonAni.Parent = Button
-        ButtonAni.BackgroundColor3 = Color3.fromRGB(0, 180, 255)  -- Light blue for button hover effect
+        ButtonAni.BackgroundColor3 = Color3.fromRGB(128, 0, 128)  -- Purple color for button hover effect
         ButtonAni.Position = UDim2.new(0.0245098043, 0, 0.0714285746, 0)
 
         UICorner_2.CornerRadius = UDim.new(0, 6)  -- Slightly rounded corners
