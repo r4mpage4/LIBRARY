@@ -1,64 +1,138 @@
-local _=print;local function xG6L(bL,Fa5m) return bL..Fa5m end
-local function c0dEcheck(pLv,lol) if pLv then return "r4mpage was here" else return "wut?" end end
-local function lzY3s(f1b) return f1b * 2 end
-local function PQRQ(a, b) return a / b end
-local function Y0m0C(ZZ, Nn) return ZZ - Nn end
-local function MoR3t(kL) if kL then return "Troll time" else return "Try harder" end end
-local function RuNNnn(x) return x + 999 end
-
-function xTeSt()
-    local N0tR3aL = "confusing"; 
-    local w0w = "code, bro"; 
-    local r1mpaG3 = xG6L(N0tR3aL,w0w)
-    _("Yo, this is " .. r1mpaG3) 
-    local Zq11X = c0dEcheck(true, "this is my trolly code")
-    _("Just checking: " .. Zq11X)
-
-    local BReakIt = RuNNnn(100)
-    _("Can you Break It? Result is: " .. BReakIt)
-    
-    if c0dEcheck(false, "are you confused?") then
-        _("ERROR: are you sure?")
-    else
-        _("nothing to worry about")
-    end
-
-    for j3lL = 1,5 do 
-        _("r4mpage gonna make you wonder!")
-    end
-
-    local Zz = lzY3s(100)
-    _("Double it up: " .. Zz)
-    
-    local Y0z = PQRQ(500, 25)
-    _("Random division: " .. Y0z)
-    
-    local C0dE = Y0m0C(500, 100)
-    _("Random subtraction: " .. C0dE)
-    
-    local MoR = MoR3t(true)
-    _("What's next: " .. MoR)
-    
-    local T1me = math.random(10, 1000)
-    _("Random time pass: " .. T1me)
-    
-    local Numb3r = math.random(1, 1000)
-    _("Just another random number: " .. Numb3r)
-    
-    for i = 1, 10 do
-        local n = math.random(1, 999)
-        _("I'm looping through randomness: " .. n)
-    end
-
-    local W3irdC0d3 = {"r4mpage", "troll", "confuse", "stuck", "help me"}
-    _("Array madness: " .. xG6L(W3irdC0d3[1], W3irdC0d3[2]) .. " ... " .. W3irdC0d3[3] .. " " .. W3irdC0d3[4])
-
-    local X0tL = math.random(0, 1)
-    if X0tL == 0 then
-        _("Sometimes you win!")
-    else
-        _("Sometimes you lose!")
-    end
+for i, v in pairs(game.CoreGui:GetChildren()) do
+	if v.Name == "UiLib" then
+		v:Destroy()
+	end
 end
 
-xTeSt()
+local UiLib = Instance.new("ScreenGui")
+UiLib.Name = "UiLib"
+UiLib.Parent = game.CoreGui
+UiLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+
+local function getNextWindowPos()
+	local biggest = 15
+	for i, v in pairs(UiLib:GetChildren()) do
+		biggest = math.max(biggest, v.Position.X.Offset + v.Size.X.Offset + 10)
+	end
+	return biggest
+end
+
+local Library = {}
+
+
+function Library:Window(title)
+	local Top = Instance.new("Frame")
+	local UICorner = Instance.new("UICorner")
+	local Container = Instance.new("Frame")
+	local UIListLayout = Instance.new("UIListLayout")
+	local Title = Instance.new("TextLabel")
+	local Minimize = Instance.new("ImageButton")
+
+	Top.Name = "Top"
+	Top.Parent = UiLib
+	Top.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+	Top.Position = UDim2.new(0, getNextWindowPos(), 0.05, 0)
+	Top.Size = UDim2.new(0, 250, 0, 30)
+	Top.Draggable = true
+	Top.Active = true
+
+	UICorner.CornerRadius = UDim.new(0, 5)
+	UICorner.Parent = Top
+
+	Title.Name = "Title"
+	Title.Parent = Top
+	Title.BackgroundTransparency = 1
+	Title.Position = UDim2.new(0.02, 0, 0, 0)
+	Title.Size = UDim2.new(0, 200, 0, 30)
+	Title.Font = Enum.Font.GothamBold
+	Title.Text = title
+	Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title.TextSize = 14
+	Title.TextXAlignment = Enum.TextXAlignment.Left
+
+	Container.Name = "Container"
+	Container.Parent = Top
+	Container.BackgroundTransparency = 1
+	Container.ClipsDescendants = true
+	Container.Position = UDim2.new(0, 0, 1, 0)
+	Container.Size = UDim2.new(0, 250, 0, 400)
+
+	UIListLayout.Parent = Container
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+	Minimize.Name = "Minimize"
+	Minimize.Parent = Top
+	Minimize.BackgroundTransparency = 1
+	Minimize.Position = UDim2.new(0.9, 0, 0, 0)
+	Minimize.Size = UDim2.new(0, 25, 0, 25)
+	Minimize.Image = "rbxassetid://3926307971"
+	Minimize.ImageRectOffset = Vector2.new(764, 244)
+	Minimize.ImageRectSize = Vector2.new(36, 36)
+	Minimize.ImageColor3 = Color3.fromRGB(0, 255, 100)
+	Minimize.Rotation = 0
+
+	Minimize.MouseButton1Click:Connect(function()
+		local minimized = Container.Size == UDim2.new(0, 250, 0, 400)
+		if minimized then
+			Container:TweenSize(UDim2.new(0, 250, 0, 0), "Out", "Quad", 0.3, true)
+			Minimize.Rotation = 90
+		else
+			Container:TweenSize(UDim2.new(0, 250, 0, 400), "Out", "Quad", 0.3, true)
+			Minimize.Rotation = 0
+		end
+	end)
+
+	local Lib = {}
+
+	
+	function Lib:Button(name, callback)
+		local Button = Instance.new("TextButton")
+		Button.Parent = Container
+		Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+		Button.Size = UDim2.new(0, 230, 0, 30)
+		Button.Text = name
+		Button.Font = Enum.Font.Gotham
+		Button.TextSize = 14
+		Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+		Button.MouseButton1Click:Connect(function()
+			callback()
+		end)
+	end
+
+	
+	function Lib:Toggle(name, callback)
+		local ToggleFrame = Instance.new("Frame")
+		local Label = Instance.new("TextLabel")
+		local ToggleButton = Instance.new("TextButton")
+		local toggled = false
+
+		ToggleFrame.Parent = Container
+		ToggleFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+		ToggleFrame.Size = UDim2.new(0, 230, 0, 30)
+
+		Label.Parent = ToggleFrame
+		Label.BackgroundTransparency = 1
+		Label.Size = UDim2.new(0.8, 0, 1, 0)
+		Label.Font = Enum.Font.Gotham
+		Label.Text = name
+		Label.TextSize = 14
+		Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Label.TextXAlignment = Enum.TextXAlignment.Left
+
+		ToggleButton.Parent = ToggleFrame
+		ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+		ToggleButton.Position = UDim2.new(0.85, 0, 0.15, 0)
+		ToggleButton.Size = UDim2.new(0, 25, 0, 25)
+		ToggleButton.Text = ""
+
+		ToggleButton.MouseButton1Click:Connect(function()
+			toggled = not toggled
+			ToggleButton.BackgroundColor3 = toggled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+			callback(toggled)
+		end)
+	end
+
+	return Lib
+end
