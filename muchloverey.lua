@@ -1,447 +1,296 @@
-do
-local i = game:GetService("CoreGui"):FindFirstChild("ScreenGui")
-if i then i:Destroy() end
+local library = {count = 0};
 
-local libraryv3 = {
-    windowcount = 0
-}
-
-local dragger = {}; 
-local resizer = {};
-
-local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
-
-do
-    local inputService = game:GetService('UserInputService');
-    local heartbeat = game:GetService("RunService").Heartbeat;
-
-    function dragger.new(frame)
-        local s, event = pcall(function()
-            return frame.MouseEnter
-        end)
-
-        if s then
-            frame.Active = true;
-
-            event:connect(function()
-                local dragging = false
-                local offset = Vector2.new()
-
-                local function startDrag(inputObject)
-                    if inputObject.UserInputType == Enum.UserInputType.MouseButton1 or inputObject.UserInputType == Enum.UserInputType.Touch then
-                        dragging = true
-                        offset = inputObject.Position - frame.AbsolutePosition
-                    end
-                end
-
-                local function updateDrag(inputObject)
-                    if dragging then
-                        local position = inputObject.Position - offset
-                        frame:TweenPosition(UDim2.new(0, position.X, 0, position.Y), 'Out', 'Quad', 0.1, true)
-                    end
-                end
-
-                local function stopDrag()
-                    dragging = false
-                end
-
-                frame.InputBegan:connect(function(key)
-                    startDrag(key)
-                end)
-
-                frame.InputChanged:connect(function(inputObject)
-                    if dragging then
-                        updateDrag(inputObject)
-                    end
-                end)
-
-                frame.InputEnded:connect(function(inputObject)
-                    stopDrag()
-                end)
-
-                frame.TouchTap:connect(function(_, position)
-                    startDrag({UserInputType = Enum.UserInputType.Touch, Position = position})
-                end)
-            end)
-        end
-    end
-    
-    function resizer.new(p, s)
-        p:GetPropertyChangedSignal('AbsoluteSize'):connect(function()
-            s.Size = UDim2.new(s.Size.X.Scale, s.Size.X.Offset, s.Size.Y.Scale, p.AbsoluteSize.Y);
-        end)
-    end
+local FindLibrary = game:GetService("CoreGui"):FindFirstChild("UI Library")
+if game:GetService("CoreGui"):FindFirstChild("UI Library") then
+    game:GetService("CoreGui"):FindFirstChild("UI Library"):Destroy()
 end
 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+local UILibrary = Instance.new("ScreenGui")
+UILibrary.Name = "UI Library"
+UILibrary.Parent = game:GetService("CoreGui")
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 200)
-frame.Position = UDim2.new(0.5, -150, 0.5, -100)
-frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-frame.Parent = screenGui
-
-dragger.new(frame)
-
-local minimizeButton = Instance.new("TextButton")
-minimizeButton.Size = UDim2.new(0, 40, 0, 40)
-minimizeButton.Position = UDim2.new(1, -40, 0, 0)
-minimizeButton.Text = "-"
-minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-minimizeButton.Parent = frame
-
-local isMinimized = false
-
-minimizeButton.MouseButton1Click:Connect(function()
-    isMinimized = not isMinimized
-    if isMinimized then
-        frame.Size = UDim2.new(0, 300, 0, 40)
-    else
-        frame.Size = UDim2.new(0, 300, 0, 200)
+game:GetService("UserInputService").InputBegan:Connect(function(Input)
+    if Input.KeyCode == Enum.KeyCode.RightShift then
+        UILibrary.Enabled = not UILibrary.Enabled
     end
-end
-local Library = {
-    Colors = {
-        Body = Color3.fromRGB(35, 35, 35);
-        Section = Color3.fromRGB(40, 40, 40);
-        CheckboxChecked = Color3.fromRGB(255, 255, 255);
-        CheckboxUnchecked = Color3.fromRGB(50, 50, 50);
-        Button = Color3.fromRGB(45, 45, 45);
-        ColorPickerMarker = Color3.fromRGB(150, 150, 150);
-        SliderBackground = Color3.fromRGB(50, 50, 50);
-        Slider = Color3.fromRGB(255, 255, 255);
-        Dropdown = Color3.fromRGB(45, 45, 45);
-        DropdownButton = Color3.fromRGB(35, 35, 35);
-        DropdownButtonHover = Color3.fromRGB(45, 45, 45);
-        Underline = Color3.fromRGB(255, 92, 92);
-        Border = Color3.fromRGB(0, 0, 0);
-        Text = Color3.fromRGB(255, 255, 255);
-        PlaceholderText = Color3.fromRGB(255, 255, 255);
-    };
-
-    Settings = {
-        MainTextSize = 15;
-        MainTweenTime = 1;
-        RippleTweenTime = 1;
-        CheckboxTweenTime = 0.5;
-        ColorPickerTweenTime = 0.5;
-        DropdownTweenTime = 0.5;
-        DropdownButtonColorHoverTweenTime = 0.5;
-        MainTextFont = Enum.Font.Code;
-        UIToggleKey = Enum.KeyCode.RightControl;
-        TweenEasingStyle = Enum.EasingStyle.Quart;
-    }
-}
-
-function RippleEffect(button)
-    spawn(function()
-        local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
-        local RippleHolder = Instance.new("Frame")
-        local RippleEffect = Instance.new("ImageLabel")
-
-        RippleHolder.Name = "RippleHolder"
-        RippleHolder.Parent = button
-        RippleHolder.BackgroundColor3 = Library.Colors.Border
-        RippleHolder.BackgroundTransparency = 1
-        RippleHolder.BorderColor3 = Library.Colors.Border
-        RippleHolder.BorderSizePixel = 0
-        RippleHolder.ClipsDescendants = true
-        RippleHolder.Size = UDim2.new(1, 0,1, 0)
-
-        RippleEffect.Name = "RippleEffect"
-        RippleEffect.Parent = RippleHolder
-        RippleEffect.BackgroundTransparency = 1
-        RippleEffect.BorderSizePixel = 0
-        RippleEffect.Image = "rbxassetid://2708891598"
-        RippleEffect.ImageColor3 = Color3.fromRGB(0,0,0)
-        RippleEffect.ImageTransparency = 0.8
-        RippleEffect.ScaleType = Enum.ScaleType.Fit
-
-        RippleEffect.Position = UDim2.new((Mouse.X - RippleEffect.AbsolutePosition.X) / button.AbsoluteSize.X, 0, (Mouse.Y - RippleEffect.AbsolutePosition.Y) / button.AbsoluteSize.Y, 0)
-        TweenService:Create(RippleEffect, TweenInfo.new(Library.Settings.RippleTweenTime, Library.Settings.TweenEasingStyle, Enum.EasingDirection.Out), {Position = UDim2.new(-5.5, 0, -5.5, 0), Size = UDim2.new(12, 0, 12, 0)}):Play()
-
-        wait(0.5)
-        TweenService:Create(RippleEffect, TweenInfo.new(Library.Settings.MainTweenTime, Library.Settings.TweenEasingStyle, Enum.EasingDirection.Out), {ImageTransparency = 1}):Play()
-
-        wait(1)
-        RippleHolder:Destroy()
-    end)
-end
-function RippleEffect2(button)
-    spawn(function()
-        local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
-        local RippleHolder = Instance.new("Frame")
-        local RippleEffect = Instance.new("ImageLabel")
-            
-        RippleHolder.Name = "RippleHolder"
-        RippleHolder.Parent = button
-        RippleHolder.BackgroundColor3 = Library.Colors.Border
-        RippleHolder.BackgroundTransparency = 1
-        RippleHolder.BorderColor3 = Library.Colors.Border
-        RippleHolder.BorderSizePixel = 0
-        RippleHolder.ClipsDescendants = true
-        RippleHolder.Size = UDim2.new(1, 0, 1, 0)
-
-        RippleEffect.Name = "RippleEffect"
-        RippleEffect.Parent = RippleHolder
-        RippleEffect.BackgroundTransparency = 1
-        RippleEffect.BorderSizePixel = 0
-        RippleEffect.Image = "rbxassetid://2708891598"
-        RippleEffect.ImageColor3 = Color3.fromRGB(0,0,0)
-        RippleEffect.ImageTransparency = 0.8
-        RippleEffect.ScaleType = Enum.ScaleType.Fit
-
-        RippleEffect.Position = UDim2.new((Mouse.X - RippleEffect.AbsolutePosition.X) / button.AbsoluteSize.X, 0, (Mouse.Y - RippleEffect.AbsolutePosition.Y) / button.AbsoluteSize.Y, 0)
-        TweenService:Create(RippleEffect, TweenInfo.new(Library.Settings.RippleTweenTime, Library.Settings.TweenEasingStyle, Enum.EasingDirection.Out), {Position = UDim2.new(-5.5, 0, -5.5, 0), Size = UDim2.new(12, 0, 12, 0)}):Play()
-
-        wait(0.5)
-        TweenService:Create(RippleEffect, TweenInfo.new(Library.Settings.MainTweenTime, Library.Settings.TweenEasingStyle, Enum.EasingDirection.Out), {ImageTransparency = 1}):Play()
-
-        wait(1)
-        RippleHolder:Destroy()
-    end)
-end
-local mouse = game:GetService("Players").LocalPlayer:GetMouse();
-function libraryv3:CreateWindow(name)
-    self.windowcount = self.windowcount + 1;
-    local ScreenGui = Instance.new("ScreenGui")
-    local main = Instance.new("Frame")
-    local TextLabel = Instance.new("TextLabel")
-    local Frame = Instance.new("Frame")
-    local UIListLayout = Instance.new("UIListLayout")
-    local TextLabel_2 = Instance.new("TextLabel")
-
-     
-    ScreenGui.Parent = game.CoreGui
-    
-    main.Name = "main"
-    main.Parent = ScreenGui
-    main.BackgroundColor3 = Color3.new(0.0392157, 0.0392157, 0.0392157)
-    main.BorderColor3 = Color3.new(0.988235, 0.729412, 0.0117647)
-    main.BorderSizePixel = 0
-    main.Position = UDim2.new(0, (15 + ((200 * self.windowcount) - 200)), 0, 15)
-    main.Size = UDim2.new(0, 190, 0, 34)
-    game:GetService('UserInputService').InputBegan:connect(function(key, gpe)
-        if key.KeyCode == Enum.KeyCode.RightShift then
-            if main.Visible == true then main.Visible = false elseif main.Visible == false then main.Visible = true end
-
-        end
-    end)
-
-    TextLabel.Parent = main
-    TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
-    TextLabel.BackgroundTransparency = 1
-    TextLabel.Size = UDim2.new(0, 190, 0, 34)
-    TextLabel.Font = Enum.Font.Code
-    TextLabel.Text = name
-    TextLabel.TextColor3 = Color3.new(1, 1, 1)
-    TextLabel.TextSize = 18
-    
-    Frame.Parent = main
-    Frame.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
-    Frame.BorderColor3 = Color3.new(0.988235, 0.729412, 0.0117647)
-    Frame.BorderSizePixel = 0
-    Frame.Position = UDim2.new(0, 0, 1, 0)
-    Frame.Size = UDim2.new(0, 190, 0, 0)
-    dragger.new(main)
-    function Resize()
-        local y = 0;
-        for i, v in next, Frame:GetChildren() do
-            if (not v:IsA('UIListLayout')) then
-                y = y + v.AbsoluteSize.Y;
-            end
-        end 
-        Frame.Size = UDim2.new(1, 0, 0, y+20)
-    end
-
-    UIListLayout.Parent = Frame
-    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    --UIListLayout.Padding = UDim.new(0, 2)
-    local wowlib = {}
-    function wowlib:Section(name)
-        local TextLabel_2 = Instance.new("TextLabel")
-        local Frame_2 = Instance.new("Frame")
-    TextLabel_2.Parent = Frame
-    TextLabel_2.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-    TextLabel_2.BorderSizePixel = 0
-    TextLabel_2.Size = UDim2.new(0, 190, 0, 35)
-    TextLabel_2.Font = Enum.Font.GothamBold
-    TextLabel_2.Text = name
-    TextLabel_2.TextColor3 = Color3.new(1, 1, 1)
-    TextLabel_2.TextSize = 18
-
-
-    Resize()
-    end
-    function wowlib:Button(name, action)
-        local TextButton = Instance.new("TextButton")
-        local TextButton_Roundify_2px = Instance.new("ImageLabel")
-        local TextLabel_3 = Instance.new("TextLabel")
-        local Frame_32 = Instance.new("Frame")
-        local TextBox = Instance.new("TextBox")
-        Frame_32.Parent = Frame
-        Frame_32.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
-        Frame_32.BorderSizePixel = 0
-        Frame_32.Position = UDim2.new(0, 0, 1, 0)
-        Frame_32.Size = UDim2.new(0, 179, 0, 4)
-        TextButton.Parent = Frame
-        TextButton.BackgroundColor3 = Color3.new(0.192157, 0.709804, 0.329412)
-        TextButton.BackgroundTransparency = 1
-        TextButton.BorderColor3 = Color3.new(0.192157, 0.709804, 0.329412)
-        TextButton.BorderSizePixel = 0
-        TextButton.Position = UDim2.new(0.0578947365, 0, 0.379999995, 0)
-        TextButton.Size = UDim2.new(0, 179, 0, 26)
-        TextButton.Font = Enum.Font.GothamSemibold
-        TextButton.Text = ""
-        TextButton.TextColor3 = Color3.new(0, 0, 0)
-        TextButton.TextSize = 18
-        TextButton.MouseButton1Down:connect(function()
-            RippleEffect(TextButton)
-        action()
-        end)
-      
-
-        TextButton_Roundify_2px.Name = "TextButton_Roundify_2px"
-        TextButton_Roundify_2px.Parent = TextButton
-        TextButton_Roundify_2px.Active = true
-        TextButton_Roundify_2px.AnchorPoint = Vector2.new(0.5, 0.5)
-        TextButton_Roundify_2px.BackgroundColor3 = Color3.new(1, 1, 1)
-        TextButton_Roundify_2px.BackgroundTransparency = 1
-        TextButton_Roundify_2px.Position = UDim2.new(0.5, 0, 0.5, 0)
-        TextButton_Roundify_2px.Selectable = true
-        TextButton_Roundify_2px.Size = UDim2.new(1, 0, 1, 0)
-        TextButton_Roundify_2px.Image = "rbxassetid://3570695787"
-        TextButton_Roundify_2px.ImageColor3 = Color3.new(0.192157, 0.709804, 0.329412)
-        TextButton_Roundify_2px.ScaleType = Enum.ScaleType.Slice
-        TextButton_Roundify_2px.SliceCenter = Rect.new(100, 100, 100, 100)
-        TextButton_Roundify_2px.SliceScale = 0.03
-        TextLabel_3.Parent = TextButton_Roundify_2px
-        TextLabel_3.BackgroundColor3 = Color3.new(1, 1, 1)
-        TextLabel_3.BackgroundTransparency = 1
-        TextLabel_3.Size = UDim2.new(0, 179, 0, 26)
-        TextLabel_3.Font = Enum.Font.GothamSemibold
-        TextLabel_3.Text = name
-        TextLabel_3.TextColor3 = Color3.new(0, 0, 0)
-        TextLabel_3.TextSize = 18
-    
-        Resize()
-    end
-    function wowlib:Box(name, callback)
-        local Frame_3 = Instance.new("Frame")
-        local TextBox = Instance.new("TextBox")
-        Frame_3.Parent = Frame
-        Frame_3.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
-        Frame_3.BorderSizePixel = 0
-        Frame_3.Position = UDim2.new(0, 0, 1, 0)
-        Frame_3.Size = UDim2.new(0, 179, 0, 4)
-        TextBox.Parent = Frame
-        TextBox.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-        TextBox.BorderSizePixel = 0
-        TextBox.Position = UDim2.new(0, 0, 1.15384614, 0)
-        TextBox.Size = UDim2.new(0, 179, 0, 26)
-        TextBox.Font = Enum.Font.GothamSemibold
-        TextBox.PlaceholderText = name
-        TextBox.Text = ""
-        TextBox.TextColor3 = Color3.new(1, 1, 1)
-        TextBox.TextSize = 14
-        TextBox.MouseEnter:connect(function()
-        RippleEffect(TextBox)
-        wait(0.100)
-        TextBox.PlaceholderText = ""
-        end)
-        TextBox.MouseLeave:connect(function()
-           wait(0.100)
-            TextBox.PlaceholderText = name
-            end)
-        TextBox.FocusLost:connect(function(...)
-			callback(TextBox, ...)
-        end)
-        Resize()
-    end
-    function wowlib:Toggle(name, action)
-        local Frame_4 = Instance.new("Frame")
-        local Frame_5 = Instance.new("ImageLabel")
-        local TextLabel_4 = Instance.new("TextLabel")
-        local TextButton_2 = Instance.new("TextButton")
-local TextButton_Roundify_2px_2 = Instance.new("ImageLabel")
-local Frame_33 = Instance.new("Frame")
-local TextBox = Instance.new("TextBox")
-Frame_33.Parent = Frame
-Frame_33.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
-Frame_33.BorderSizePixel = 0
-Frame_33.Position = UDim2.new(0, 0, 1, 0)
-Frame_33.Size = UDim2.new(0, 179, 0, 4)
-        Frame_4.Parent = Frame
-Frame_4.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
-Frame_4.BorderSizePixel = 0
-Frame_4.Position = UDim2.new(-0.0631578937, 0, 0.48756218, 0)
-Frame_4.Size = UDim2.new(0, 179, 0, 30)
-
-Frame_5.Name = "Frame"
-Frame_5.Parent = Frame_4
-Frame_5.BackgroundColor3 = Color3.new(1, 1, 1)
-Frame_5.BackgroundTransparency = 1
-Frame_5.BorderSizePixel = 0
-Frame_5.Position = UDim2.new(0.843575418, 0, 0, 0)
-Frame_5.Size = UDim2.new(0, 28, 0, 27)
-Frame_5.Image = "rbxassetid://3570695787"
-Frame_5.ImageColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-Frame_5.ScaleType = Enum.ScaleType.Slice
-Frame_5.SliceCenter = Rect.new(100, 100, 100, 100)
-local Enabled = false
-TextButton_2.Parent = Frame_5
-TextButton_2.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-TextButton_2.BackgroundTransparency = 1
-TextButton_2.BorderSizePixel = 0
-TextButton_2.Size = UDim2.new(0, 28, 0, 27)
-TextButton_2.Font = Enum.Font.SourceSans
-TextButton_2.Text = ""
-TextButton_2.TextColor3 = Color3.new(0, 0, 0)
-TextButton_2.TextSize = 14
-
-
-TextButton_Roundify_2px_2.Name = "TextButton_Roundify_2px"
-TextButton_Roundify_2px_2.Parent = TextButton_2
-TextButton_Roundify_2px_2.Active = true
-TextButton_Roundify_2px_2.AnchorPoint = Vector2.new(0.5, 0.5)
-TextButton_Roundify_2px_2.BackgroundColor3 = Color3.new(1, 1, 1)
-TextButton_Roundify_2px_2.BackgroundTransparency = 1
-TextButton_Roundify_2px_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-TextButton_Roundify_2px_2.Selectable = true
-TextButton_Roundify_2px_2.Size = UDim2.new(1, 0, 1, 0)
-TextButton_Roundify_2px_2.Image = "rbxassetid://3570695787"
-TextButton_Roundify_2px_2.ImageColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-TextButton_Roundify_2px_2.ScaleType = Enum.ScaleType.Slice
-TextButton_Roundify_2px_2.SliceCenter = Rect.new(100, 100, 100, 100)
-TextButton_Roundify_2px_2.SliceScale = 0.03
-TextLabel_4.Parent = Frame_4
-TextLabel_4.BackgroundColor3 = Color3.new(1, 1, 1)
-TextLabel_4.BackgroundTransparency = 1
-TextLabel_4.Size = UDim2.new(0, 145, 0, 27)
-TextLabel_4.Font = Enum.Font.GothamSemibold
-TextLabel_4.Text = " "..name
-TextLabel_4.TextColor3 = Color3.new(1, 1, 1)
-TextLabel_4.TextSize = 19
-TextLabel_4.TextWrapped = true
-TextLabel_4.TextXAlignment = Enum.TextXAlignment.Left
-TextButton_2.MouseButton1Down:connect(function()
-    Enabled = not Enabled
-    
-    if Enabled then
-        TextButton_Roundify_2px_2.ImageColor3 = Color3.fromRGB(49, 181, 84)
-    elseif not Enabled then
-        TextButton_Roundify_2px_2.ImageColor3 = Color3.fromRGB(30,30,30)
-    end
-    RippleEffect2(TextButton_Roundify_2px_2)
-    action(Enabled)
- 
 end)
-Resize()
+
+function library:CreateWindow(WName)
+    library.count = library.count + 1
+    local ui = {}
+    local Holder = Instance.new("ImageLabel")
+    local WindowText = Instance.new("TextLabel")
+    local Container = Instance.new("ImageLabel")
+    local ToggleGUI = Instance.new("TextButton")
+    local UIListLayout = Instance.new("UIListLayout")
+    local UIPadding = Instance.new("UIPadding")
+
+    
+    Holder.Name = WName
+    Holder.Parent = UILibrary
+    Holder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Holder.BackgroundTransparency = 1.000
+    Holder.BorderSizePixel = 0
+    Holder.Position = UDim2.new(0, (15 + (202 * library.count) - 200), 0.002, 0)
+    Holder.Size = UDim2.new(0, 200, 0, 39)
+    Holder.ZIndex = 5
+    Holder.Image = "rbxassetid://3570695787"
+    Holder.ImageColor3 = Color3.fromRGB(26, 26, 26)
+    Holder.ScaleType = Enum.ScaleType.Slice
+    Holder.SliceCenter = Rect.new(100, 100, 100, 100)
+    Holder.SliceScale = 0.040
+
+    
+    ToggleGUI.Name = "ToggleGUI"
+    ToggleGUI.Parent = Holder
+    ToggleGUI.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleGUI.BackgroundTransparency = 1.000
+    ToggleGUI.BorderSizePixel = 0
+    ToggleGUI.Position = UDim2.new(0.852380931, 0, 0, 0)
+    ToggleGUI.Size = UDim2.new(0, 31, 0, 38)
+    ToggleGUI.ZIndex = 6
+    ToggleGUI.Font = Enum.Font.GothamBold
+    ToggleGUI.Text = "▼"
+    ToggleGUI.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleGUI.TextSize = 17.000
+
+    
+    Container.Name = "Container"
+    Container.Parent = Holder
+    Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Container.BackgroundTransparency = 1.000
+    Container.ClipsDescendants = true
+    Container.Size = UDim2.new(0, 200, 0, 37)
+    Container.ZIndex = 2
+    Container.Image = "rbxassetid://3570695787"
+    Container.ImageColor3 = Color3.fromRGB(35, 35, 35)
+    Container.ScaleType = Enum.ScaleType.Slice
+    Container.SliceCenter = Rect.new(100, 100, 100, 100)
+    Container.SliceScale = 0.040
+
+    
+    WindowText.Name = WName
+    WindowText.Parent = Holder
+    WindowText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    WindowText.BackgroundTransparency = 1.000
+    WindowText.BorderSizePixel = 0
+    WindowText.Position = UDim2.new(0.0399999991, 0, 0.15384616, 0)
+    WindowText.Size = UDim2.new(0, 186, 0, 27)
+    WindowText.ZIndex = 5
+    WindowText.Font = Enum.Font.SourceSans
+    WindowText.Text = WName
+    WindowText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    WindowText.TextSize = 22.000
+    WindowText.TextXAlignment = Enum.TextXAlignment.Left
+
+    
+    UIListLayout.Parent = Container
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.Padding = UDim.new(0, 1)
+
+    UIPadding.Parent = Container
+    UIPadding.PaddingTop = UDim.new(0, 40)
+
+    -- Draggable Window
+    local players = game:service('Players')
+    local player = players.LocalPlayer
+    local mouse = player:GetMouse()
+    local run = game:service('RunService')
+    local stepped = run.Stepped
+
+    local function draggable(obj)
+        spawn(function()
+            obj.Active = true
+            local minitial
+            local initial
+            local isdragging
+            obj.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    isdragging = true
+                    minitial = input.Position
+                    initial = obj.Position
+                    local con
+                    con = stepped:Connect(function()
+                        if isdragging then
+                            local delta = Vector3.new(mouse.X, mouse.Y, 0) - minitial
+                            obj.Position = UDim2.new(initial.X.Scale, initial.X.Offset + delta.X, initial.Y.Scale, initial.Y.Offset + delta.Y)
+                        else
+                            con:Disconnect()
+                        end
+                    end)
+                    input.Changed:Connect(function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            isdragging = false
+                        end
+                    end)
+                end
+            end)
+        end)
     end
-    return wowlib;
-end
-return libraryv3;
+
+    draggable(Holder)
+    local TweenService = game:GetService("TweenService")
+    local function Rotation(Object, RotateAMT, Delay)
+        local ToTween = Object
+        local tweenInfo = TweenInfo.new(Delay, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0)
+        local Tweener = TweenService:Create(ToTween, tweenInfo, {Rotation = RotateAMT})
+        Tweener:Play()
+    end
+
+    local Enabled = false
+    NewWindow:FindFirstChild("ToggleGUI").MouseButton1Click:Connect(function()
+        Enabled = not Enabled
+        if Enabled then
+            Rotation(NewWindow:FindFirstChild("ToggleGUI"), 90, .2)
+        else
+            Rotation(NewWindow:FindFirstChild("ToggleGUI"), 0, .2)
+        end
+        wait()
+        local y = 37
+        for i, v in pairs(Container:GetChildren()) do
+            if (not v:IsA("UIPadding") and not v:IsA("UIListLayout")) then
+                y = y + (v.AbsoluteSize.Y) + 2
+            end
+        end
+
+        local targetSize = Enabled and UDim2.new(0, 200, 0, 37) or UDim2.new(0, 200, 0, y + 2)
+        local targetDirection = Enabled and "Out" or "In"
+
+        Container:TweenSize(targetSize, targetDirection, "Linear", 0.15, true)
+    end)
+
+    -- Label for Window (Improvement)
+    local label = Instance.new("TextLabel")
+    label.Name = "WindowLabel"
+    label.Parent = Holder
+    label.BackgroundTransparency = 1
+    label.Position = UDim2.new(0, 0, 1, 0)
+    label.Size = UDim2.new(0, 200, 0, 30)
+    label.Text = "This is a label for your window"
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.TextSize = 18
+    label.Font = Enum.Font.SourceSans
+
+    
+    function ui:Resize()
+        local y = 37
+        for i, v in pairs(Container:GetChildren()) do
+            if not v:IsA("UIPadding") and not v:IsA("UIListLayout") then
+                y = y + (v.AbsoluteSize.Y) + 2
+            end
+        end
+        Container.Size = UDim2.new(0, 200, 0, y + 2)
+    end
+    function ui:Button(Name, callback)
+        local ButtonHolder = Instance.new("Frame")
+        local Button = Instance.new("TextButton")
+        local Button_Roundify_5px = Instance.new("ImageLabel")
+
+        ButtonHolder.Name = "ButtonHolder"
+        ButtonHolder.Parent = Container
+        ButtonHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        ButtonHolder.BackgroundTransparency = 1.000
+        ButtonHolder.BorderSizePixel = 0
+        ButtonHolder.Position = UDim2.new(0, 0, 0.519480586, 0)
+        ButtonHolder.Size = UDim2.new(0, 200, 0, 37)
+        ButtonHolder.ZIndex = 2
+
+        Button.Name = "Button"
+        Button.Parent = ButtonHolder
+        Button.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        Button.BackgroundTransparency = 1.000
+        Button.BorderSize = 1.000
+        SliderTitle.Font = Enum.Font.SourceSans
+		SliderTitle.Text = name
+		SliderTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+		SliderTitle.TextSize = 16.000
+		SliderTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+		SliderFrame.Name = "SliderFrame"
+		SliderFrame.Parent = SliderHolder
+		SliderFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+		SliderFrame.BorderSizePixel = 0
+		SliderFrame.Position = UDim2.new(0, 0, 0.464000046, 0)
+		SliderFrame.Size = UDim2.new(0, 200, 0, 30)
+		SliderFrame.ZIndex = 4
+		SliderFrame.Font = Enum.Font.SourceSans
+		SliderFrame.Text = ""
+		SliderFrame.TextColor3 = Color3.fromRGB(255, 255, 255)
+		SliderFrame.TextSize = 16.000
+
+		Slider.Name = "Slider"
+		Slider.Parent = SliderFrame
+		Slider.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+		Slider.BorderSizePixel = 0
+		Slider.Size = UDim2.new(0, 0, 1, 0)
+		Slider.ZIndex = 5
+
+		UIGradient.Parent = Slider
+		UIGradient.Color = ColorSequence.new{
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(85, 85, 85)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(26, 26, 26))
+		}
+		UIGradient.Offset = Vector2.new(0, 0)
+
+		ValueText.Name = "ValueText"
+		ValueText.Parent = SliderFrame
+		ValueText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		ValueText.BackgroundTransparency = 1.000
+		ValueText.BorderSizePixel = 0
+		ValueText.Position = UDim2.new(0.900000036, 0, 0, 0)
+		ValueText.Size = UDim2.new(0, 25, 0, 30)
+		ValueText.ZIndex = 6
+		ValueText.Font = Enum.Font.SourceSans
+		ValueText.Text = tostring(min)
+		ValueText.TextColor3 = Color3.fromRGB(255, 255, 255)
+		ValueText.TextSize = 22.000
+		ValueText.TextXAlignment = Enum.TextXAlignment.Center
+
+		local dragging = false
+
+		SliderFrame.MouseButton1Down:Connect(function()
+			dragging = true
+			while dragging do
+				local xPos = math.clamp(Mouse.X - SliderFrame.AbsolutePosition.X, 0, SliderFrame.AbsoluteSize.X)
+				Slider.Size = UDim2.new(0, xPos, 1, 0)
+				local value = math.floor((xPos / SliderFrame.AbsoluteSize.X) * (max - min) + min)
+				ValueText.Text = tostring(value)
+				callback(value)
+				wait()
+			end
+		end)
+
+		SliderFrame.MouseButton1Up:Connect(function()
+			dragging = false
+		end)
+
+		function SetSliderValue(val)
+			local xPos = math.clamp((val - min) / (max - min) * SliderFrame.AbsoluteSize.X, 0, SliderFrame.AbsoluteSize.X)
+			Slider.Size = UDim2.new(0, xPos, 1, 0)
+			ValueText.Text = tostring(val)
+		end
+
+		SetSliderValue(min)
+	end
+
+	
+	function ui:Label(name)
+		local Label = Instance.new("TextLabel")
+		Label.Name = name
+		Label.Parent = Container
+		Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Label.BackgroundTransparency = 1.000
+		Label.BorderSizePixel = 0
+		Label.Position = UDim2.new(0, 0, 0.519480586, 0)
+		Label.Size = UDim2.new(0, 200, 0, 37)
+		Label.Font = Enum.Font.SourceSans
+		Label.Text = name
+		Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Label.TextSize = 22.000
+		Label.TextWrapped = true
+	end
+
+	return ui;
+end;
+
+return library;
