@@ -1,3 +1,4 @@
+do
 local i = game:GetService("CoreGui"):FindFirstChild("ScreenGui")
 if i then i:Destroy() end
 
@@ -101,7 +102,7 @@ minimizeButton.MouseButton1Click:Connect(function()
     else
         frame.Size = UDim2.new(0, 300, 0, 200)
     end
-end)
+end
 local Library = {
     Colors = {
         Body = Color3.fromRGB(35, 35, 35);
