@@ -1,5 +1,4 @@
-do
-	local i = game:GetService("CoreGui"):FindFirstChild("ScreenGui")
+local i = game:GetService("CoreGui"):FindFirstChild("ScreenGui")
 if i then i:Destroy() end
 
 local libraryv3 = {
