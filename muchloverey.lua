@@ -1,20 +1,21 @@
 local Library = {}
 
 function Library:CreateUI(title)
-    -- Main Screen GUI
+    
     local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
     local MainFrame = Instance.new("Frame", ScreenGui)
-    MainFrame.Size = UDim2.new(0, 300, 0, 400)
-    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+    MainFrame.Size = UDim2.new(0, 250, 0, 350) -- Reduced size
+    MainFrame.Position = UDim2.new(0, 10, 0.5, -175) -- Move to left side
     MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     MainFrame.BorderSizePixel = 0
     MainFrame.ClipsDescendants = true
+    MainFrame.Draggable = true  
 
-    -- UI Corner
+    
     local UICorner = Instance.new("UICorner", MainFrame)
     UICorner.CornerRadius = UDim.new(0, 8)
 
-    -- Title Bar
+    
     local TitleBar = Instance.new("TextLabel", MainFrame)
     TitleBar.Size = UDim2.new(1, 0, 0, 40)
     TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
@@ -24,7 +25,7 @@ function Library:CreateUI(title)
     TitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
     TitleBar.TextXAlignment = Enum.TextXAlignment.Center
 
-    -- Close Button
+    -- Close and Minimize Buttons
     local CloseButton = Instance.new("TextButton", TitleBar)
     CloseButton.Text = "X"
     CloseButton.Font = Enum.Font.GothamBold
@@ -37,18 +38,33 @@ function Library:CreateUI(title)
         ScreenGui:Destroy()
     end)
 
+    -- Minimize Button
+    local MinimizeButton = Instance.new("TextButton", TitleBar)
+    MinimizeButton.Text = "_"
+    MinimizeButton.Font = Enum.Font.GothamBold
+    MinimizeButton.TextSize = 14
+    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizeButton.BackgroundTransparency = 1
+    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    MinimizeButton.Position = UDim2.new(1, -70, 0, 5)
+    MinimizeButton.MouseButton1Click:Connect(function()
+        if MainFrame.Size == UDim2.new(0, 250, 0, 40) then
+            MainFrame.Size = UDim2.new(0, 250, 0, 350)
+        else
+            MainFrame.Size = UDim2.new(0, 250, 0, 40) -- Minimize the frame
+        end
+    end)
+
     -- Buttons Container
     local ButtonContainer = Instance.new("Frame", MainFrame)
     ButtonContainer.Size = UDim2.new(1, 0, 1, -40)
     ButtonContainer.Position = UDim2.new(0, 0, 0, 40)
     ButtonContainer.BackgroundTransparency = 1
 
-    -- UIListLayout for Buttons
     local Layout = Instance.new("UIListLayout", ButtonContainer)
     Layout.SortOrder = Enum.SortOrder.LayoutOrder
     Layout.Padding = UDim.new(0, 10)
 
-    -- Create Button Function
     function Library:CreateButton(buttonText, callback)
         local Button = Instance.new("TextButton", ButtonContainer)
         Button.Size = UDim2.new(1, -20, 0, 40)
@@ -69,7 +85,6 @@ function Library:CreateUI(title)
         end)
     end
 
-    -- Create Toggle Function
     function Library:CreateToggle(toggleText, default, callback)
         local ToggleFrame = Instance.new("Frame", ButtonContainer)
         ToggleFrame.Size = UDim2.new(1, -20, 0, 40)
