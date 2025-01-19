@@ -1,10 +1,11 @@
 do
 	local i = game:GetService("CoreGui"):FindFirstChild("ScreenGui")
-	if i then i:Destroy() end
-end
-local libraryv3={
-windowcount = 0
+if i then i:Destroy() end
+
+local libraryv3 = {
+    windowcount = 0
 }
+
 local dragger = {}; 
 local resizer = {};
 
@@ -14,7 +15,7 @@ local TweenService = game:GetService("TweenService")
 do
     local inputService = game:GetService('UserInputService');
     local heartbeat = game:GetService("RunService").Heartbeat;
-    
+
     function dragger.new(frame)
         local s, event = pcall(function()
             return frame.MouseEnter
@@ -24,7 +25,6 @@ do
             frame.Active = true;
 
             event:connect(function()
-                local input
                 local dragging = false
                 local offset = Vector2.new()
 
@@ -73,6 +73,36 @@ do
         end)
     end
 end
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 300, 0, 200)
+frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame.Parent = screenGui
+
+dragger.new(frame)
+
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Size = UDim2.new(0, 40, 0, 40)
+minimizeButton.Position = UDim2.new(1, -40, 0, 0)
+minimizeButton.Text = "-"
+minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+minimizeButton.Parent = frame
+
+local isMinimized = false
+
+minimizeButton.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    if isMinimized then
+        frame.Size = UDim2.new(0, 300, 0, 40)
+    else
+        frame.Size = UDim2.new(0, 300, 0, 200)
+    end
+end)
 local Library = {
     Colors = {
         Body = Color3.fromRGB(35, 35, 35);
