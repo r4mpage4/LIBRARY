@@ -1,146 +1,104 @@
-for i, v in pairs(game.CoreGui:GetChildren()) do
-    if v.Name == "UiLib" then
-        v:Destroy()
-    end
-end
+local r4mpageLibrary = {}
 
-local UiLib = Instance.new("ScreenGui")
-UiLib.Name = "UiLib"
-UiLib.Parent = game.CoreGui
-UiLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+function r4mpageLibrary:Window(title)
+    local UI = {}
 
-local function getNextWindowPos()
-    local biggest = 0
-    local lastWindow
-    for _, v in pairs(UiLib:GetChildren()) do
-        if v.Position.X.Offset > biggest then
-            biggest = v.Position.X.Offset
-            lastWindow = v
-        end
-    end
-    return lastWindow and (biggest + lastWindow.Size.X.Offset + 10) or 15
-end
+    
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Parent = game.CoreGui
 
-local Library = {}
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Size = UDim2.new(0, 300, 0, 400)
+    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Parent = ScreenGui
 
-function Library:Window(title)
-    local Top = Instance.new("Frame")
-    local UICorner = Instance.new("UICorner")
-    local Container = Instance.new("Frame")
+    local TitleBar = Instance.new("TextLabel")
+    TitleBar.Size = UDim2.new(1, 0, 0, 40)
+    TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    TitleBar.Text = title
+    TitleBar.Font = Enum.Font.GothamBold
+    TitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TitleBar.TextSize = 18
+    TitleBar.Parent = MainFrame
+
+    local ContentFrame = Instance.new("Frame")
+    ContentFrame.Size = UDim2.new(1, 0, 1, -40)
+    ContentFrame.Position = UDim2.new(0, 0, 0, 40)
+    ContentFrame.BackgroundTransparency = 1
+    ContentFrame.Parent = MainFrame
+
     local UIListLayout = Instance.new("UIListLayout")
-    local Line = Instance.new("Frame")
-    local Title = Instance.new("TextLabel")
-    local Minimize = Instance.new("ImageButton")
-    local ResizeGrip = Instance.new("Frame")
-
-    Top.Name = "Top"
-    Top.Parent = UiLib
-    Top.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    Top.BorderSizePixel = 0
-    Top.Position = UDim2.new(0, getNextWindowPos(), 0.01, 0)
-    Top.Size = UDim2.new(0, 220, 0, 30)
-    Top.Active = true
-    Top.Draggable = true
-
-    UICorner.CornerRadius = UDim.new(0, 4)
-    UICorner.Parent = Top
-
-    Container.Name = "Container"
-    Container.Parent = Top
-    Container.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    Container.ClipsDescendants = true
-    Container.Position = UDim2.new(0, 0, 1, 0)
-    Container.Size = UDim2.new(0, 220, 0, 300)
-
-    UIListLayout.Parent = Container
+    UIListLayout.Padding = UDim.new(0, 10)
+    UIListLayout.FillDirection = Enum.FillDirection.Vertical
     UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.Parent = ContentFrame
 
-    Line.Name = "Line"
-    Line.Parent = Top
-    Line.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    Line.Size = UDim2.new(1, 0, 0, 2)
-
-    Title.Name = "Title"
-    Title.Parent = Top
-    Title.BackgroundTransparency = 1
-    Title.Position = UDim2.new(0.05, 0, 0.1, 0)
-    Title.Size = UDim2.new(0.7, 0, 0.8, 0)
-    Title.Font = Enum.Font.Gotham
-    Title.Text = title
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.TextScaled = true
-    Title.TextXAlignment = Enum.TextXAlignment.Left
-
-    Minimize.Name = "Minimize"
-    Minimize.Parent = Top
-    Minimize.BackgroundTransparency = 1
-    Minimize.Position = UDim2.new(0.9, 0, 0.1, 0)
-    Minimize.Size = UDim2.new(0.1, 0, 0.8, 0)
-    Minimize.Image = "rbxassetid://3926305904"
-    Minimize.ImageColor3 = Color3.fromRGB(0, 255, 102)
-    Minimize.Rotation = 90
-
-    ResizeGrip.Name = "ResizeGrip"
-    ResizeGrip.Parent = Top
-    ResizeGrip.Size = UDim2.new(0, 15, 0, 15)
-    ResizeGrip.Position = UDim2.new(1, -15, 1, -15)
-    ResizeGrip.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-
-    local function toggleMinimize()
-        if Container.Visible then
-            Container.Visible = false
-            Minimize.Rotation = 180
-        else
-            Container.Visible = true
-            Minimize.Rotation = 90
-        end
-    end
-
-    Minimize.MouseButton1Click:Connect(toggleMinimize)
-
-    local Lib = {}
-
-    function Lib:Label(text)
-        local Label = Instance.new("TextLabel")
-        Label.Parent = Container
-        Label.BackgroundTransparency = 1
-        Label.Size = UDim2.new(1, -10, 0, 30)
-        Label.Font = Enum.Font.Gotham
-        Label.Text = text
-        Label.TextColor3 = Color3.fromRGB(200, 200, 200)
-        Label.TextScaled = true
-    end
-
-    function Lib:Button(name, callback)
+    
+    function UI:Button(text, callback)
         local Button = Instance.new("TextButton")
-        Button.Parent = Container
-        Button.Size = UDim2.new(1, -10, 0, 30)
-        Button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        Button.Size = UDim2.new(0, 280, 0, 40)
+        Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        Button.Text = text
         Button.Font = Enum.Font.Gotham
-        Button.Text = name
         Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+        Button.TextSize = 14
+        Button.Parent = ContentFrame
+
         Button.MouseButton1Click:Connect(callback)
     end
 
-    function Lib:Toggle(name, callback)
-        local Toggle = Instance.new("TextButton")
-        Toggle.Parent = Container
-        Toggle.Size = UDim2.new(1, -10, 0, 30)
-        Toggle.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-        Toggle.Font = Enum.Font.Gotham
-        Toggle.Text = name
-        Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-        local toggled = false
+    
+    function UI:Toggle(text, callback)
+        local ToggleFrame = Instance.new("Frame")
+        ToggleFrame.Size = UDim2.new(0, 280, 0, 40)
+        ToggleFrame.BackgroundTransparency = 1
+        ToggleFrame.Parent = ContentFrame
 
-        Toggle.MouseButton1Click:Connect(function()
-            toggled = not toggled
-            Toggle.TextColor3 = toggled and Color3.fromRGB(0, 255, 102) or Color3.fromRGB(255, 255, 255)
-            callback(toggled)
+        local Label = Instance.new("TextLabel")
+        Label.Size = UDim2.new(0.8, 0, 1, 0)
+        Label.BackgroundTransparency = 1
+        Label.Text = text
+        Label.Font = Enum.Font.Gotham
+        Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+        Label.TextSize = 14
+        Label.TextXAlignment = Enum.TextXAlignment.Left
+        Label.Parent = ToggleFrame
+
+        local ToggleButton = Instance.new("TextButton")
+        ToggleButton.Size = UDim2.new(0.2, 0, 1, 0)
+        ToggleButton.Position = UDim2.new(0.8, 0, 0, 0)
+        ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        ToggleButton.Text = "Off"
+        ToggleButton.Font = Enum.Font.Gotham
+        ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ToggleButton.TextSize = 14
+        ToggleButton.Parent = ToggleFrame
+
+        local state = false
+        ToggleButton.MouseButton1Click:Connect(function()
+            state = not state
+            ToggleButton.Text = state and "On" or "Off"
+            ToggleButton.BackgroundColor3 = state and Color3.fromRGB(0, 200, 0) or Color3.fromRGB(200, 0, 0)
+            callback(state)
         end)
     end
 
-    return Lib
+    
+    function UI:Label(text)
+        local Label = Instance.new("TextLabel")
+        Label.Size = UDim2.new(0, 280, 0, 30)
+        Label.BackgroundTransparency = 1
+        Label.Text = text
+        Label.Font = Enum.Font.Gotham
+        Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+        Label.TextSize = 14
+        Label.Parent = ContentFrame
+    end
+
+    return UI
 end
 
-return Library
+return r4mpageLibrary
