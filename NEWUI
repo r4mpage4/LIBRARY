@@ -552,8 +552,8 @@ function ui:Label(Name)
 
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
-    LabelHolder.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Change to your preferred background color
-    LabelHolder.BackgroundTransparency = 0.5 -- Adjust transparency for a more subtle background
+    LabelHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    LabelHolder.BackgroundTransparency = 0.5
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
     LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
