@@ -522,7 +522,7 @@ function library:CreateWindow(WName)
 		ToggleText.Font = Enum.Font.SourceSansSemibold
 		ToggleText.Text = Name
 		ToggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleText.TextSize = 20.000
+		ToggleText.TextSize = 30.000
 		ToggleText.TextXAlignment = Enum.TextXAlignment.Left
 
 		local TweenService = game:GetService("TweenService")
