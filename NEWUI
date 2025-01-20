@@ -552,8 +552,8 @@ function ui:Label(Name)
 
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
-    LabelHolder.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    LabelHolder.BackgroundTransparency = 0.5
+    LabelHolder.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    LabelHolder.BackgroundTransparency = 0.6
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
     LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
@@ -565,50 +565,27 @@ function ui:Label(Name)
     Label.BackgroundTransparency = 1
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
+    Label.Size = UDim2.new(0, math.max(190, Label.TextBounds.X + 10), 0, 30)
     Label.ZIndex = 4
-    Label.Font = Enum.Font.GothamBold  -- Bold font for emphasis
+    Label.Font = Enum.Font.GothamBold
     Label.Text = Name
-    Label.TextColor3 = Color3.fromRGB(0, 0, 0)  -- Black text color
-    Label.TextSize = 24
-    Label.TextStrokeTransparency = 0.6  -- Subtle text stroke for better visibility
-    Label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)  -- White stroke for contrast
+    Label.TextColor3 = Color3.fromRGB(255, 215, 0) -- Change text
+    Label.TextSize = 26
     Label.TextWrapped = true
     Label.ClipsDescendants = true
-
-    -- Adding a subtle shadow effect for text depth
-    local TextShadow = Instance.new("TextLabel")
-    TextShadow.Name = "TextShadow"
-    TextShadow.Parent = Label
-    TextShadow.Text = Name
-    TextShadow.Font = Label.Font
-    TextShadow.TextColor3 = Color3.fromRGB(0, 0, 0)
-    TextShadow.TextSize = Label.TextSize
-    TextShadow.TextStrokeTransparency = 0.8
-    TextShadow.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    TextShadow.Position = UDim2.new(0, 2, 0, 2)  -- Offset the shadow slightly for depth
-    TextShadow.ZIndex = 3  -- Place shadow behind the main text
-
-    -- Creating a background effect with a gradient
-    local TextGradient = Instance.new("UIGradient")
-    TextGradient.Parent = Label
-    TextGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),  -- White start
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(211, 211, 211))  -- Light grey end
-    }
-    TextGradient.Rotation = 45  -- Diagonal gradient effect for a smooth look
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
     Label_Roundify_5px.Parent = Label
     Label_Roundify_5px.Active = true
     Label_Roundify_5px.AnchorPoint = Vector2.new(0.5, 0.5)
     Label_Roundify_5px.BackgroundColor3 = Color3.fromRGB(211, 211, 211)
-    Label_Roundify_5px.BackgroundTransparency = 0.5
+    Label_Roundify_5px.BackgroundTransparency = 0.3
     Label_Roundify_5px.Position = UDim2.new(0.5, 0, 0.5, 0)
     Label_Roundify_5px.Selectable = true
     Label_Roundify_5px.Size = UDim2.new(1, 0, 1, 0)
     Label_Roundify_5px.ZIndex = 3
     Label_Roundify_5px.Image = "rbxassetid://3570695787"
-    Label_Roundify_5px.ImageColor3 = Color3.fromRGB(211, 211, 211)
+    Label_Roundify_5px.ImageColor3 = Color3.fromRGB(255, 170, 0) -- back
     Label_Roundify_5px.ScaleType = Enum.ScaleType.Slice
     Label_Roundify_5px.SliceCenter = Rect.new(100, 100, 100, 100)
     Label_Roundify_5px.SliceScale = 0.050
