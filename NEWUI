@@ -601,12 +601,12 @@ function ui:Label(Name)
     Shadow.Name = "Shadow"
     Shadow.Parent = LabelHolder
     Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Shadow.BackgroundTransparency = 0.10
+    Shadow.BackgroundTransparency = 0.7
     Shadow.BorderSizePixel = 0
     Shadow.Position = UDim2.new(0, 4, 0, 4)
     Shadow.Size = UDim2.new(0, 250, 0, 40)
     Shadow.ZIndex = 1
-    Shadow.Visible = false
+    Shadow.Visible = true
 
     ui:Resize()
 end
