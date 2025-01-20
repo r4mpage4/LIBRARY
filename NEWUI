@@ -552,8 +552,8 @@ function ui:Label(Name)
 
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
-    LabelHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    LabelHolder.BackgroundTransparency = 1  -- Saykii
+    LabelHolder.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Change to your preferred background color
+    LabelHolder.BackgroundTransparency = 0.5 -- Adjust transparency for a more subtle background
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
     LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
@@ -561,7 +561,7 @@ function ui:Label(Name)
 
     Label.Name = "Label"
     Label.Parent = LabelHolder
-    Label.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    Label.BackgroundColor3 = Color3.fromRGB(45, 45, 45) 
     Label.BackgroundTransparency = 1
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
@@ -579,7 +579,7 @@ function ui:Label(Name)
     Label_Roundify_5px.Active = true
     Label_Roundify_5px.AnchorPoint = Vector2.new(0.5, 0.5)
     Label_Roundify_5px.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    Label_Roundify_5px.BackgroundTransparency = 1 
+    Label_Roundify_5px.BackgroundTransparency = 0.5
     Label_Roundify_5px.Position = UDim2.new(0.5, 0, 0.5, 0)
     Label_Roundify_5px.Selectable = true
     Label_Roundify_5px.Size = UDim2.new(1, 0, 1, 0)
