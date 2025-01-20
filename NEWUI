@@ -552,16 +552,25 @@ function ui:Label(Name)
 
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
-    LabelHolder.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    LabelHolder.BackgroundTransparency = 0.5
+    LabelHolder.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    LabelHolder.BackgroundTransparency = 0.7
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
     LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
     LabelHolder.ZIndex = 2
+    LabelHolder.ClipsDescendants = true
+
+    local gradient = Instance.new("UIGradient")
+    gradient.Parent = LabelHolder
+    gradient.Color = ColorSequence.new(
+        Color3.fromRGB(255, 255, 255), 
+        Color3.fromRGB(0, 0, 0)
+    )
+    gradient.Rotation = 45
 
     Label.Name = "Label"
     Label.Parent = LabelHolder
-    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
+    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     Label.BackgroundTransparency = 1
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
@@ -569,9 +578,11 @@ function ui:Label(Name)
     Label.ZIndex = 4
     Label.Font = Enum.Font.SourceSans
     Label.Text = Name
-    Label.TextColor3 = Color3.fromRGB(211, 211, 211) -- text color
+    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
     Label.TextSize = 24.000
     Label.TextWrapped = true
+    Label.TextStrokeTransparency = 0.8
+    Label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
     Label.ClipsDescendants = true
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
