@@ -556,7 +556,6 @@ function ui:Label(Name)
     LabelHolder.BackgroundTransparency = 0.5
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
-    LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
     LabelHolder.ZIndex = 2
 
     Label.Name = "Label"
@@ -565,7 +564,6 @@ function ui:Label(Name)
     Label.BackgroundTransparency = 1
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
-    Label.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 10), 0, 30)
     Label.ZIndex = 4
     Label.Font = Enum.Font.GothamBold
     Label.Text = Name
@@ -576,13 +574,14 @@ function ui:Label(Name)
     Label.TextWrapped = true
     Label.ClipsDescendants = true
 
+    -- Adjust the label size based on the actual width of the text
+    Label.Size = UDim2.new(0, Label.TextBounds.X + 10, 0, 30)
+
     local TweenService = game:GetService("TweenService")
     local Info = TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, -1, true)
     local TweenGoal = {Position = UDim2.new(0.03, 0, 0.05, 0)}
     local Tween = TweenService:Create(Label, Info, TweenGoal)
     Tween:Play()
-
-    Label.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 10), 0, 30)
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
     Label_Roundify_5px.Parent = Label
