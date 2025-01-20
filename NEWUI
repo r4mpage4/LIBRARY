@@ -545,15 +545,15 @@ function library:CreateWindow(WName)
 		end)
 		ui:Resize()
 	end
-function ui:Label(Name)
+ function ui:Label(Name)
     local LabelHolder = Instance.new("Frame")
     local Label = Instance.new("TextLabel")
     local Label_Roundify_5px = Instance.new("ImageLabel")
 
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
-    LabelHolder.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    LabelHolder.BackgroundTransparency = 0.6
+    LabelHolder.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    LabelHolder.BackgroundTransparency = 0.5
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
     LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
@@ -561,16 +561,16 @@ function ui:Label(Name)
 
     Label.Name = "Label"
     Label.Parent = LabelHolder
-    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Label.BackgroundTransparency = 1
+    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
+    Label.BackgroundTransparency = 0.5
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
     Label.Size = UDim2.new(0, math.max(190, Label.TextBounds.X + 10), 0, 30)
-    Label.ZIndex = 4
-    Label.Font = Enum.Font.GothamBold
+    Label.ZIndex = 3
+    Label.Font = Enum.Font.SourceSans
     Label.Text = Name
-    Label.TextColor3 = Color3.fromRGB(255, 215, 0) -- Change text
-    Label.TextSize = 26
+    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Label.TextSize = 24.000
     Label.TextWrapped = true
     Label.ClipsDescendants = true
 
@@ -579,16 +579,16 @@ function ui:Label(Name)
     Label_Roundify_5px.Active = true
     Label_Roundify_5px.AnchorPoint = Vector2.new(0.5, 0.5)
     Label_Roundify_5px.BackgroundColor3 = Color3.fromRGB(211, 211, 211)
-    Label_Roundify_5px.BackgroundTransparency = 0.3
+    Label_Roundify_5px.BackgroundTransparency = 0.7
     Label_Roundify_5px.Position = UDim2.new(0.5, 0, 0.5, 0)
     Label_Roundify_5px.Selectable = true
     Label_Roundify_5px.Size = UDim2.new(1, 0, 1, 0)
     Label_Roundify_5px.ZIndex = 3
     Label_Roundify_5px.Image = "rbxassetid://3570695787"
-    Label_Roundify_5px.ImageColor3 = Color3.fromRGB(255, 170, 0) -- back
+    Label_Roundify_5px.ImageColor3 = Color3.fromRGB(211, 211, 211)
     Label_Roundify_5px.ScaleType = Enum.ScaleType.Slice
     Label_Roundify_5px.SliceCenter = Rect.new(100, 100, 100, 100)
-    Label_Roundify_5px.SliceScale = 0.050
+    Label_Roundify_5px.SliceScale = 0.060
 
     ui:Resize()
 end
