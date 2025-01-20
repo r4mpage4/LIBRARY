@@ -522,7 +522,7 @@ function library:CreateWindow(WName)
 		ToggleText.Font = Enum.Font.SourceSansSemibold
 		ToggleText.Text = Name
 		ToggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleText.TextSize = 31.000
+		ToggleText.TextSize = 25.000
 		ToggleText.TextXAlignment = Enum.TextXAlignment.Left
 
 		local TweenService = game:GetService("TweenService")
@@ -601,12 +601,12 @@ function ui:Label(Name)
     Shadow.Name = "Shadow"
     Shadow.Parent = LabelHolder
     Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Shadow.BackgroundTransparency = 0.7
+    Shadow.BackgroundTransparency = 0.10
     Shadow.BorderSizePixel = 0
     Shadow.Position = UDim2.new(0, 4, 0, 4)
     Shadow.Size = UDim2.new(0, 250, 0, 40)
     Shadow.ZIndex = 1
-    Shadow.Visible = true
+    Shadow.Visible = false
 
     ui:Resize()
 end
