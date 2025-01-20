@@ -565,7 +565,7 @@ function ui:Label(Name)
     Label.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     Label.BackgroundTransparency = 0.100
     Label.BorderSizePixel = 0
-    Label.Position = UDim2.new(0.03, 0, 0.1, 0)
+    Label.Position = UDim2.new(0.015, 0, 0.1, 0)
     Label.Size = UDim2.new(0, 210, 0, 35)
     Label.ZIndex = 4
     Label.Font = Enum.Font.GothamBold
