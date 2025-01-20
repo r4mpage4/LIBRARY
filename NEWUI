@@ -549,46 +549,47 @@ function ui:Label(Name)
     local LabelHolder = Instance.new("Frame")
     local Label = Instance.new("TextLabel")
     local Label_Roundify_5px = Instance.new("ImageLabel")
-    local Gradient = Instance.new("UIGradient")
+
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
-    LabelHolder.BackgroundTransparency = 1
-    LabelHolder.Size = UDim2.new(0, 220, 0, 45)
+    LabelHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    LabelHolder.BackgroundTransparency = 0.1
+    LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0, 0, 0.6, 0)
+    LabelHolder.Size = UDim2.new(0, 210, 0, 45)
     LabelHolder.ZIndex = 2
+
     Label.Name = "Label"
     Label.Parent = LabelHolder
-    Label.BackgroundTransparency = 0.1
-    Label.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    Label.Size = UDim2.new(0, 210, 0, 35)
-    Label.Position = UDim2.new(0.05, 0, 0.1, 0)
-    Label.Font = Enum.Font.GothamBold
+    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Label.BackgroundTransparency = 0
+    Label.BorderSizePixel = 0
+    Label.Position = UDim2.new(0.03, 0, 0.1, 0)
+    Label.Size = UDim2.new(0, 200, 0, 37)
+    Label.ZIndex = 4
+    Label.Font = Enum.Font.SourceSans
     Label.Text = Name
     Label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    Label.TextStrokeTransparency = 0
-    Label.TextSize = 20
+    Label.TextSize = 24
     Label.TextWrapped = true
-    Label.ZIndex = 4
     Label.ClipsDescendants = true
-    Gradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(85, 170, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 85, 255))
-    })
-    Gradient.Rotation = 45
-    Gradient.Parent = Label
+
     Label_Roundify_5px.Name = "Label_Roundify_5px"
     Label_Roundify_5px.Parent = Label
-    Label_Roundify_5px.BackgroundTransparency = 1
-    Label_Roundify_5px.Size = UDim2.new(1, 0, 1, 0)
-    Label_Roundify_5px.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Label_Roundify_5px.Active = true
     Label_Roundify_5px.AnchorPoint = Vector2.new(0.5, 0.5)
+    Label_Roundify_5px.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Label_Roundify_5px.BackgroundTransparency = 1
+    Label_Roundify_5px.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Label_Roundify_5px.Selectable = true
+    Label_Roundify_5px.Size = UDim2.new(1.1, 0, 1.2, 0)
+    Label_Roundify_5px.ZIndex = 3
     Label_Roundify_5px.Image = "rbxassetid://3570695787"
-    Label_Roundify_5px.ImageColor3 = Color3.fromRGB(45, 45, 45)
+    Label_Roundify_5px.ImageColor3 = Color3.fromRGB(0, 0, 0)
     Label_Roundify_5px.ScaleType = Enum.ScaleType.Slice
     Label_Roundify_5px.SliceCenter = Rect.new(100, 100, 100, 100)
-    Label_Roundify_5px.SliceScale = 0.05
-    Label_Roundify_5px.ZIndex = 3
+    Label_Roundify_5px.SliceScale = 0.08
+
     ui:Resize()
 end
 	pcall(function()
