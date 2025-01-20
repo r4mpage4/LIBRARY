@@ -556,6 +556,7 @@ function ui:Label(Name)
     LabelHolder.BackgroundTransparency = 0.5
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
+    LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
     LabelHolder.ZIndex = 2
 
     Label.Name = "Label"
@@ -565,23 +566,36 @@ function ui:Label(Name)
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
     Label.ZIndex = 4
-    Label.Font = Enum.Font.GothamBold
+    Label.Font = Enum.Font.GothamBold  -- Bold font for emphasis
     Label.Text = Name
-    Label.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Label.TextColor3 = Color3.fromRGB(0, 0, 0)  -- Black text color
     Label.TextSize = 24
-    Label.TextStrokeTransparency = 0.8
-    Label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+    Label.TextStrokeTransparency = 0.6  -- Subtle text stroke for better visibility
+    Label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)  -- White stroke for contrast
     Label.TextWrapped = true
     Label.ClipsDescendants = true
 
-    -- Adjust the label size based on the actual width of the text
-    Label.Size = UDim2.new(0, Label.TextBounds.X + 10, 0, 30)
+    -- Adding a subtle shadow effect for text depth
+    local TextShadow = Instance.new("TextLabel")
+    TextShadow.Name = "TextShadow"
+    TextShadow.Parent = Label
+    TextShadow.Text = Name
+    TextShadow.Font = Label.Font
+    TextShadow.TextColor3 = Color3.fromRGB(0, 0, 0)
+    TextShadow.TextSize = Label.TextSize
+    TextShadow.TextStrokeTransparency = 0.8
+    TextShadow.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    TextShadow.Position = UDim2.new(0, 2, 0, 2)  -- Offset the shadow slightly for depth
+    TextShadow.ZIndex = 3  -- Place shadow behind the main text
 
-    local TweenService = game:GetService("TweenService")
-    local Info = TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, -1, true)
-    local TweenGoal = {Position = UDim2.new(0.03, 0, 0.05, 0)}
-    local Tween = TweenService:Create(Label, Info, TweenGoal)
-    Tween:Play()
+    -- Creating a background effect with a gradient
+    local TextGradient = Instance.new("UIGradient")
+    TextGradient.Parent = Label
+    TextGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),  -- White start
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(211, 211, 211))  -- Light grey end
+    }
+    TextGradient.Rotation = 45  -- Diagonal gradient effect for a smooth look
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
     Label_Roundify_5px.Parent = Label
