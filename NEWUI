@@ -565,12 +565,14 @@ function ui:Label(Name)
     Label.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     Label.BackgroundTransparency = 0.100
     Label.BorderSizePixel = 0
-    Label.Position = UDim2.new(0.015, 0, 0.1, 0)
+    Label.Position = UDim2.new(0.009, 0, 0.1, 0) -- adjust
     Label.Size = UDim2.new(0, 210, 0, 35)
     Label.ZIndex = 4
     Label.Font = Enum.Font.GothamBold
     Label.Text = Name
     Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Label.TextStrokeTransparency = 0 
+    Label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
     Label.TextSize = 20.000
     Label.TextWrapped = true
     Label.ClipsDescendants = true
