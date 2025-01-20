@@ -561,26 +561,25 @@ function ui:Label(Name)
 
     Label.Name = "Label"
     Label.Parent = LabelHolder
-    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
+    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     Label.BackgroundTransparency = 1
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
     Label.Size = UDim2.new(0, math.max(190, Label.TextBounds.X + 10), 0, 30)
     Label.ZIndex = 4
-    Label.Font = Enum.Font.SourceSansBold
+    Label.Font = Enum.Font.GothamBold
     Label.Text = Name
-    Label.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Label.TextColor3 = Color3.fromRGB(0, 0, 0)  -- Black text
     Label.TextSize = 24
+    Label.TextStrokeTransparency = 0.8
+    Label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)  -- White stroke for contrast
     Label.TextWrapped = true
     Label.ClipsDescendants = true
-
-    local textGradient = Instance.new("UIGradient")
-    textGradient.Parent = Label
-    textGradient.Color = ColorSequence.new(
-        Color3.fromRGB(50, 50, 50),
-        Color3.fromRGB(100, 100, 100)
-    )
-    textGradient.Rotation = 45
+    local TweenService = game:GetService("TweenService")
+    local Info = TweenInfo.new(0.5, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out, -1, true)
+    local TweenGoal = {Position = UDim2.new(0.03, 0, 0.05, 0)}
+    local Tween = TweenService:Create(Label, Info, TweenGoal)
+    Tween:Play()
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
     Label_Roundify_5px.Parent = Label
