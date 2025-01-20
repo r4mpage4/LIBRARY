@@ -556,7 +556,7 @@ function ui:Label(Name)
     LabelHolder.BackgroundTransparency = 0
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
-    LabelHolder.Size = UDim2.new(0, 200, 0, 37)
+    LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
     LabelHolder.ZIndex = 2
 
     Label.Name = "Label"
@@ -565,30 +565,14 @@ function ui:Label(Name)
     Label.BackgroundTransparency = 2.000
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
-    Label.Size = UDim2.new(0, 190, 0, 30)
+    Label.Size = UDim2.new(0, math.max(190, Label.TextBounds.X + 10), 0, 30)
     Label.ZIndex = 4
     Label.Font = Enum.Font.SourceSans
-    Label.Text = "YouTube: r4mpage"  -- Custom label text
+    Label.Text = Name
     Label.TextColor3 = Color3.fromRGB(255, 255, 255)
     Label.TextSize = 22.000
     Label.TextWrapped = true
     Label.ClipsDescendants = true
-
-    -- Adding text shadow for highlighted effect
-    local TextShadow = Instance.new("TextLabel")
-    TextShadow.Name = "TextShadow"
-    TextShadow.Parent = Label
-    TextShadow.BackgroundTransparency = 1
-    TextShadow.BorderSizePixel = 0
-    TextShadow.Position = UDim2.new(0, 1, 0, 1)
-    TextShadow.Size = UDim2.new(1, 0, 1, 0)
-    TextShadow.Text = "YouTube: r4mpage" -- test
-    TextShadow.TextColor3 = Color3.fromRGB(0, 0, 0)
-    TextShadow.TextSize = 22.000
-    TextShadow.Font = Enum.Font.SourceSans
-    TextShadow.TextTransparency = 0.7
-    TextShadow.TextWrapped = true
-    TextShadow.ClipsDescendants = true
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
     Label_Roundify_5px.Parent = Label
