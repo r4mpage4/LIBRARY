@@ -555,8 +555,9 @@ function ui:Label(Name)
     LabelHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     LabelHolder.BackgroundTransparency = 0
     LabelHolder.BorderSizePixel = 0
-    LabelHolder.Position = UDim2.new(00.5, 0, 0, 0)
-    LabelHolder.Size = UDim2.new(0, 200, 0, 37)
+    LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
+    LabelHolder.AnchorPoint = Vector2.new(0.5, 0)
+    LabelHolder.Size = UDim2.new(0, 250, 0, 50)  -- Increased width for better visibility
     LabelHolder.ZIndex = 2
 
     Label.Name = "Label"
@@ -564,8 +565,8 @@ function ui:Label(Name)
     Label.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
     Label.BackgroundTransparency = 2.000
     Label.BorderSizePixel = 0
-    Label.Position = UDim2.new(0.03, 0, 0.1, 0)
-    Label.Size = UDim2.new(0, 190, 0, 30)
+    Label.Position = UDim2.new(0.1, 0, 0.2, 0)  -- Adjusted position
+    Label.Size = UDim2.new(1, -20, 1, -10)  -- Adjusted size with padding
     Label.ZIndex = 4
     Label.Font = Enum.Font.SourceSans
     Label.Text = Name
