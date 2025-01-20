@@ -569,7 +569,7 @@ function ui:Label(Name)
     Label.ZIndex = 4
     Label.Font = Enum.Font.SourceSans
     Label.Text = Name
-    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Label.TextColor3 = Color3.fromRGB(211, 211, 211) -- text color
     Label.TextSize = 24.000
     Label.TextWrapped = true
     Label.ClipsDescendants = true
