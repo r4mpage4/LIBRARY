@@ -553,7 +553,7 @@ function ui:Label(Name)
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
     LabelHolder.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    LabelHolder.BackgroundTransparency = 0.7
+    LabelHolder.BackgroundTransparency = 0.3  -- Reduced transparency for better contrast
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0.5, 0, 0, 0)
     LabelHolder.Size = UDim2.new(0, math.max(200, Label.TextBounds.X + 20), 0, 37)
