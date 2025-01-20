@@ -572,6 +572,7 @@ function ui:Label(Name)
     Label.TextColor3 = Color3.fromRGB(255, 255, 255)
     Label.TextSize = 24
     Label.TextWrapped = true
+    Label.TextXAlignment = Enum.TextXAlignment.Left
     Label.ClipsDescendants = true
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
