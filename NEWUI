@@ -553,27 +553,25 @@ function ui:Label(Name)
     LabelHolder.Name = "LabelHolder"
     LabelHolder.Parent = Container
     LabelHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    LabelHolder.BackgroundTransparency = 1.000
+    LabelHolder.BackgroundTransparency = 0
     LabelHolder.BorderSizePixel = 0
     LabelHolder.Position = UDim2.new(0, 0, 0.6, 0)
-    LabelHolder.Size = UDim2.new(0, 300, 0, 50)
+    LabelHolder.Size = UDim2.new(0, 200, 0, 37)
     LabelHolder.ZIndex = 2
 
     Label.Name = "Label"
     Label.Parent = LabelHolder
     Label.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    Label.BackgroundTransparency = 1.000
+    Label.BackgroundTransparency = 2.000
     Label.BorderSizePixel = 0
-    Label.Position = UDim2.new(0.05, 0, 0.2, 0)
-    Label.Size = UDim2.new(0, 270, 0, 40)
+    Label.Position = UDim2.new(0.03, 0, 0.1, 0)
+    Label.Size = UDim2.new(0, 190, 0, 30)
     Label.ZIndex = 4
     Label.Font = Enum.Font.SourceSans
     Label.Text = Name
     Label.TextColor3 = Color3.fromRGB(255, 255, 255)
     Label.TextSize = 22.000
     Label.TextWrapped = true
-    Label.TextStrokeTransparency = 0.8
-    Label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
     Label.ClipsDescendants = true
 
     Label_Roundify_5px.Name = "Label_Roundify_5px"
@@ -581,7 +579,7 @@ function ui:Label(Name)
     Label_Roundify_5px.Active = true
     Label_Roundify_5px.AnchorPoint = Vector2.new(0.5, 0.5)
     Label_Roundify_5px.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Label_Roundify_5px.BackgroundTransparency = 1.000
+    Label_Roundify_5px.BackgroundTransparency = 0
     Label_Roundify_5px.Position = UDim2.new(0.5, 0, 0.5, 0)
     Label_Roundify_5px.Selectable = true
     Label_Roundify_5px.Size = UDim2.new(1, 0, 1, 0)
