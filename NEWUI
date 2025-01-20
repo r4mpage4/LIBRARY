@@ -561,7 +561,7 @@ function library:CreateWindow(WName)
 
     Label.Name = "Label"
     Label.Parent = LabelHolder
-    Label.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     Label.BackgroundTransparency = 1
     Label.BorderSizePixel = 0
     Label.Position = UDim2.new(0.03, 0, 0.1, 0)
