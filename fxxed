@@ -53,7 +53,7 @@ function library:CreateWindow(WName)
 	ToggleGUI.Size = UDim2.new(0, 31, 0, 38)
 	ToggleGUI.ZIndex = 6
 	ToggleGUI.Font = Enum.Font.GothamBold
-	ToggleGUI.Text = "▼"
+	ToggleGUI.Text = "â–¼"
 	ToggleGUI.TextColor3 = Color3.fromRGB(255, 255, 255)
 	ToggleGUI.TextSize = 17.000
 
@@ -92,6 +92,7 @@ function library:CreateWindow(WName)
 	UIPadding.PaddingTop = UDim.new(0, 40)
 
 	local NewWindow = Holder;
+	--//ALL CREDITS GO TO Google Chrome\\--
 
 	local players = game:service('Players');
     local player = players.LocalPlayer;
@@ -462,80 +463,103 @@ function library:CreateWindow(WName)
 					Box.TextScaled = false
     			end
 			end)
-		ui:Resize()
-	end
-function ui:Toggle(Name,callback)
-		local Enabled = false;
-
-		local ToggleHolder = Instance.new("Frame")
-		local ToggleImage = Instance.new("ImageLabel")
-		local MainToggle = Instance.new("ImageButton")
-		local ToggleText = Instance.new("TextLabel")
-
-		ToggleHolder.Name = "ToggleHolder"
-		ToggleHolder.Parent = Container
-		ToggleHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleHolder.BackgroundTransparency = 1.000
-		ToggleHolder.BorderSizePixel = 0
-		ToggleHolder.Position = UDim2.new(0, 0, 0.519480586, 0)
-		ToggleHolder.Size = UDim2.new(0, 210, 0, 40)
-		ToggleHolder.ZIndex = 2
-
-		ToggleImage.Name = "ToggleImage"
-		ToggleImage.Parent = ToggleHolder
-		ToggleImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleImage.BackgroundTransparency = 1.000
-		ToggleImage.BorderSizePixel = 0
-		ToggleImage.Position = UDim2.new(0.829999983, 0, 0.0810000002, 0)
-		ToggleImage.Size = UDim2.new(0, 35, 0, 35)
-		ToggleImage.ZIndex = 2
-		ToggleImage.Image = "http://www.roblox.com/asset/?id=4908273649"
-
-		MainToggle.Name = "MainToggle"
-		MainToggle.Parent = ToggleHolder
-		MainToggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		MainToggle.BackgroundTransparency = 1.000
-		MainToggle.BorderSizePixel = 0
-		MainToggle.Position = UDim2.new(0.829999983, 0, 0.0810000002, 0)
-		MainToggle.Size = UDim2.new(0, 35, 0, 35)
-		MainToggle.ZIndex = 3
-		MainToggle.Image = "http://www.roblox.com/asset/?id=4908257956"
-		MainToggle.ImageColor3 = Color3.fromRGB(90, 255, 115)
-		MainToggle.ImageTransparency = 1.000
-
-		ToggleText.Name = "ToggleText"
-		ToggleText.Parent = ToggleHolder
-		ToggleText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleText.BackgroundTransparency = 1.000
-		ToggleText.BorderSizePixel = 0
-		ToggleText.Position = UDim2.new(0.0450000018, 0, 0.0810000449, 0)
-		ToggleText.Size = UDim2.new(0, 157, 0, 29)
-		ToggleText.ZIndex = 3
-		ToggleText.Font = Enum.Font.SourceSansSemibold
-		ToggleText.Text = Name
-		ToggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleText.TextSize = 25
-		ToggleText.TextXAlignment = Enum.TextXAlignment.Left
-
-		local TweenService = game:GetService("TweenService")
-
-		local function Fade(Object,FadeAmount,Delay)
-		local ToTween = Object
-
-		local Tweener = TweenService:Create(ToTween,TweenInfo.new(Delay),{ImageTransparency = FadeAmount})
-		Tweener:Play()
-		end
-
-		MainToggle.MouseButton1Click:Connect(function()
-			Enabled = not Enabled
-			callback(Enabled)
-			if Enabled then
-				Fade(MainToggle,0,.2)
-			else
-				Fade(MainToggle,1,.2)
-			end
+			--[[game:GetService("StarterGui"):SetCore("SendNotification", {
+        		Title = "I am working on lib",
+        		Text = "If you see this so if you get error sorry",
+        		Duration = 5
+    		})]]
 		end)
 		ui:Resize()
+	end
+local UserInputService = game:GetService("UserInputService")
+
+function ui:Toggle(Name, callback)
+    local Enabled = false
+
+    local ToggleHolder = Instance.new("Frame")
+    local ToggleImage = Instance.new("ImageLabel")
+    local MainToggle = Instance.new("ImageButton")
+    local ToggleText = Instance.new("TextLabel")
+
+    ToggleHolder.Name = "ToggleHolder"
+    ToggleHolder.Parent = Container
+    ToggleHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleHolder.BackgroundTransparency = 1.000
+    ToggleHolder.BorderSizePixel = 0
+    ToggleHolder.Position = UDim2.new(0, 0, 0.519480586, 0)
+    ToggleHolder.Size = UDim2.new(0, 200, 0, 37)
+    ToggleHolder.ZIndex = 2
+
+    ToggleImage.Name = "ToggleImage"
+    ToggleImage.Parent = ToggleHolder
+    ToggleImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleImage.BackgroundTransparency = 1.000
+    ToggleImage.BorderSizePixel = 0
+    ToggleImage.Position = UDim2.new(0.829999983, 0, 0.0810000002, 0)
+    ToggleImage.Size = UDim2.new(0, 30, 0, 30)
+    ToggleImage.ZIndex = 2
+    ToggleImage.Image = "http://www.roblox.com/asset/?id=4908273649"
+
+    MainToggle.Name = "MainToggle"
+    MainToggle.Parent = ToggleHolder
+    MainToggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    MainToggle.BackgroundTransparency = 1.000
+    MainToggle.BorderSizePixel = 0
+    MainToggle.Position = UDim2.new(0.829999983, 0, 0.0810000002, 0)
+    MainToggle.Size = UDim2.new(0, 30, 0, 30)
+    MainToggle.ZIndex = 3
+    MainToggle.Image = "http://www.roblox.com/asset/?id=4908257956"
+    MainToggle.ImageColor3 = Color3.fromRGB(90, 255, 115)
+    MainToggle.ImageTransparency = 1.000
+
+    ToggleText.Name = "ToggleText"
+    ToggleText.Parent = ToggleHolder
+    ToggleText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleText.BackgroundTransparency = 1.000
+    ToggleText.BorderSizePixel = 0
+    ToggleText.Position = UDim2.new(0.0450000018, 0, 0.0810000449, 0)
+    ToggleText.Size = UDim2.new(0, 157, 0, 29)
+    ToggleText.ZIndex = 3
+    ToggleText.Font = Enum.Font.SourceSansSemibold
+    ToggleText.Text = Name
+    ToggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleText.TextSize = 25.000
+    ToggleText.TextXAlignment = Enum.TextXAlignment.Left
+
+    local TweenService = game:GetService("TweenService")
+
+    local function Fade(Object, FadeAmount, Delay)
+        local ToTween = Object
+
+        local Tweener = TweenService:Create(ToTween, TweenInfo.new(Delay), { ImageTransparency = FadeAmount })
+        Tweener:Play()
+    end
+
+    local function Toggle()
+        Enabled = not Enabled
+        callback(Enabled)
+        if Enabled then
+            Fade(MainToggle, 0, .2)
+        else
+            Fade(MainToggle, 1, .2)
+        end
+    end
+
+    MainToggle.MouseButton1Click:Connect(Toggle)
+
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if gameProcessed then return end
+        if input.UserInputType == Enum.UserInputType.Touch then
+            local touchPosition = input.Position
+            if MainToggle.AbsolutePosition.X <= touchPosition.X and touchPosition.X <= MainToggle.AbsolutePosition.X + MainToggle.AbsoluteSize.X and
+               MainToggle.AbsolutePosition.Y <= touchPosition.Y and touchPosition.Y <= MainToggle.AbsolutePosition.Y + MainToggle.AbsoluteSize.Y then
+                Toggle()
+            end
+        end
+    end)
+
+    ui:Resize()
+end
  function ui:Label(Name)
     local LabelHolder = Instance.new("Frame")
     local Label = Instance.new("TextLabel")
