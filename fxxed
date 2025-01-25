@@ -464,13 +464,13 @@ function library:CreateWindow(WName)
 			end)
 		ui:Resize()
 	end
-
 function ui:Toggle(Name, callback)
     local Enabled = false
     local TweenService = game:GetService("TweenService")
+    
     local ToggleHolder = Instance.new("Frame")
     local ToggleImage = Instance.new("ImageLabel")
-    local MainToggle = Instance.new("TextButton")
+    local MainToggle = Instance.new("ImageButton")
     local ToggleText = Instance.new("TextLabel")
     ToggleHolder.Name = "ToggleHolder"
     ToggleHolder.Parent = Container
@@ -478,7 +478,7 @@ function ui:Toggle(Name, callback)
     ToggleHolder.BackgroundTransparency = 1
     ToggleHolder.BorderSizePixel = 0
     ToggleHolder.Position = UDim2.new(0, 0, 0.519, 0)
-    ToggleHolder.Size = UDim2.new(0, 200, 0, 37)
+    ToggleHolder.Size = UDim2.new(0, 210, 0, 40)
     ToggleHolder.ZIndex = 2
     ToggleImage.Name = "ToggleImage"
     ToggleImage.Parent = ToggleHolder
@@ -490,9 +490,11 @@ function ui:Toggle(Name, callback)
     MainToggle.Name = "MainToggle"
     MainToggle.Parent = ToggleHolder
     MainToggle.BackgroundTransparency = 1
-    MainToggle.Position = UDim2.new(0.75, 0, 0, 0) --b
-    MainToggle.Size = UDim2.new(0, 50, 0, 37) -- Tried
-    MainToggle.Text = ""
+    MainToggle.Position = UDim2.new(0.83, 0, 0.081, 0)
+    MainToggle.Size = UDim2.new(0, 35, 0, 35)
+    MainToggle.Image = "http://www.roblox.com/asset/?id=4908257956"
+    MainToggle.ImageColor3 = Color3.fromRGB(90, 255, 115)
+    MainToggle.ImageTransparency = 1
     MainToggle.ZIndex = 3
     ToggleText.Name = "ToggleText"
     ToggleText.Parent = ToggleHolder
@@ -514,12 +516,11 @@ function ui:Toggle(Name, callback)
         callback(Enabled)
 
         local fadeAmount = Enabled and 0 or 1
-        Fade(ToggleImage, fadeAmount, 0.2)
+        Fade(MainToggle, fadeAmount, 0.2)
     end)
 
     ui:Resize()
 end
-
  function ui:Label(Name)
     local LabelHolder = Instance.new("Frame")
     local Label = Instance.new("TextLabel")
