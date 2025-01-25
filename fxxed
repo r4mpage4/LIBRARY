@@ -53,7 +53,7 @@ function library:CreateWindow(WName)
 	ToggleGUI.Size = UDim2.new(0, 31, 0, 38)
 	ToggleGUI.ZIndex = 6
 	ToggleGUI.Font = Enum.Font.GothamBold
-	ToggleGUI.Text = "â–¼"
+	ToggleGUI.Text = "-"
 	ToggleGUI.TextColor3 = Color3.fromRGB(255, 255, 255)
 	ToggleGUI.TextSize = 17.000
 
@@ -530,7 +530,6 @@ function ui:Toggle(Name, callback)
 
     local function Fade(Object, FadeAmount, Delay)
         local ToTween = Object
-
         local Tweener = TweenService:Create(ToTween, TweenInfo.new(Delay), { ImageTransparency = FadeAmount })
         Tweener:Play()
     end
@@ -546,13 +545,16 @@ function ui:Toggle(Name, callback)
     end
 
     MainToggle.MouseButton1Click:Connect(Toggle)
+    ToggleText.MouseButton1Click:Connect(Toggle) -- try
 
     UserInputService.InputBegan:Connect(function(input, gameProcessed)
         if gameProcessed then return end
         if input.UserInputType == Enum.UserInputType.Touch then
             local touchPosition = input.Position
-            if MainToggle.AbsolutePosition.X <= touchPosition.X and touchPosition.X <= MainToggle.AbsolutePosition.X + MainToggle.AbsoluteSize.X and
-               MainToggle.AbsolutePosition.Y <= touchPosition.Y and touchPosition.Y <= MainToggle.AbsolutePosition.Y + MainToggle.AbsoluteSize.Y then
+            if (MainToggle.AbsolutePosition.X <= touchPosition.X and touchPosition.X <= MainToggle.AbsolutePosition.X + MainToggle.AbsoluteSize.X and
+                MainToggle.AbsolutePosition.Y <= touchPosition.Y and touchPosition.Y <= MainToggle.AbsolutePosition.Y + MainToggle.AbsoluteSize.Y) or
+               (ToggleText.AbsolutePosition.X <= touchPosition.X and touchPosition.X <= ToggleText.AbsolutePosition.X + ToggleText.AbsoluteSize.X and
+                ToggleText.AbsolutePosition.Y <= touchPosition.Y and touchPosition.Y <= ToggleText.AbsolutePosition.Y + ToggleText.AbsoluteSize.Y) then
                 Toggle()
             end
         end
